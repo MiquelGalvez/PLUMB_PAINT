@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         }
         if (transform.position.x > Camera.main.transform.position.x)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(3);
         }
     }
 
