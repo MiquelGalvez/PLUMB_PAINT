@@ -77,15 +77,16 @@ public class PlayerController : MonoBehaviour
 
     void OnBecameInvisible()
     {
-        if (transform.position.y < Camera.main.transform.position.y)
+        if (transform.position.y < cam.transform.position.y)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        if (transform.position.x > Camera.main.transform.position.x)
+        else if (transform.position.x > cam.transform.position.x)
         {
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(2);
         }
     }
+
 
     void Flip(float moveInput)
     {
