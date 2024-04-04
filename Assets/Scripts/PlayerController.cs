@@ -36,7 +36,18 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("IsJumping", true);
         }
 
-        // Correr al presionar Shift
+        if (moveInput != 0)
+        {
+            isRunning = true;
+            _animator.SetBool("IsRunning", true); // Establecer el parámetro en true
+        }
+        else
+        {
+            isRunning = false;
+            _animator.SetBool("IsRunning", false); // Establecer el parámetro en false
+        }
+
+        /*// Correr al presionar Shift
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             isRunning = true;
@@ -46,7 +57,7 @@ public class PlayerController : MonoBehaviour
         {
             isRunning = false;
             _animator.SetBool("IsRunning", false); // Establecer el parámetro en false
-        }
+        }*/
 
     }
 
@@ -68,7 +79,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnBecameInvisible()
+    /*void OnBecameInvisible()
     {
         if (transform.position.y < Camera.main.transform.position.y)
         {
@@ -78,7 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(2);
         }
-    }
+    }*/
 
     void Flip(float moveInput)
     {
