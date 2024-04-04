@@ -68,17 +68,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*void OnBecameInvisible()
-     {
-         if (transform.position.y < Camera.main.transform.position.y)
-         {
-             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-         }
-         if (transform.position.x > Camera.main.transform.position.x)
-         {
-             SceneManager.LoadScene(3);
-         }
-     }*/
+    void OnBecameInvisible()
+    {
+        if (transform.position.y < Camera.main.transform.position.y)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        if (transform.position.x > Camera.main.transform.position.x)
+        {
+            SceneManager.LoadScene(2);
+        }
+    }
 
     void Flip(float moveInput)
     {
