@@ -8,11 +8,15 @@ TagManager:
   - Player Shoot
   - Enemic
   - Restart
+  - Bullet
+  - UltimateShoot
+  - Misile
+  - Turret
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UltimateShoot
   - Water
   - UI
   - Piso

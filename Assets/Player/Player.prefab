@@ -43,10 +43,10 @@ GameObject:
   - component: {fileID: 1820128754657055131}
   - component: {fileID: 7075308443144204779}
   - component: {fileID: 6308715072067952525}
-  - component: {fileID: 4452357592684981279}
   - component: {fileID: 3046098212377851869}
   - component: {fileID: 1809741015820245621}
   - component: {fileID: 790959140314486456}
+  - component: {fileID: 6783065358506092551}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -64,8 +64,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.19, y: -2.78, z: 0}
-  m_LocalScale: {x: 0.22503741, y: 0.22705059, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.08, y: 0.08071567, z: 0.35549644}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5037347733677044160}
   m_Father: {fileID: 0}
@@ -172,57 +172,12 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.42044008, y: 0.57645565}
-  m_Size: {x: 3.0444043, y: 6.908694}
+  m_Offset: {x: -0.41136146, y: 0.57645553}
+  m_Size: {x: 3.026247, y: 6.9086933}
   m_Direction: 0
---- !u!61 &4452357592684981279
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7040884719976425630}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.06470382, y: -3.613118}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8, y: 8}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.1672316, y: 1.0399823}
-  m_EdgeRadius: 0
 --- !u!50 &3046098212377851869
 Rigidbody2D:
   serializedVersion: 4
@@ -264,6 +219,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controladorDisparo: {fileID: 5037347733677044160}
   balaPrefab: {fileID: 7259374370334305698, guid: 6874799162c5e43ad8b8d2f5d917f42f, type: 3}
+  ultimatePrefab: {fileID: 0}
+  ultimate: {fileID: 0}
+  jugadorImage: {fileID: 0}
+  direccionJugador: {x: 1, y: 0}
 --- !u!114 &790959140314486456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +235,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cfe5533e48d65348a57d4c20ccb4b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkingSound: {fileID: 0}
   moveSpeed: 2
-  runSpeed: 5
+  runSpeed: 3
   jumpForce: 5
+  youdied: {fileID: 0}
+  hud: {fileID: 0}
+  fadein: {fileID: 0}
+  ultimateProjectilePrefab: {fileID: 0}
+  maxBulletUltDistance: 20
+  imageToModify: {fileID: 0}
+  ultimate: {fileID: 0}
+  widthDecreaseAmount: 0
+--- !u!70 &6783065358506092551
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040884719976425630}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.45675635, y: 0.57645476}
+  m_Size: {x: 2.535987, y: 6.6207504}
+  m_Direction: 0
