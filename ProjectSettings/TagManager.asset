@@ -3,23 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Ground
-  - Player Shoot
-  - Enemic
-  - Restart
-  - Bullet
-  - UltimateShoot
-  - Misile
-  - Turret
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - UltimateShoot
+  - 
   - Water
   - UI
-  - Piso
+  - 
   - 
   - 
   - 
