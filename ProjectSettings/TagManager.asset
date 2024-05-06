@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Weapon
+  - Ground
+  - Player Shoot
+  - Enemic
+  - Turret
+  - Bullet
+  - Misile
+  - UltimateShoot
+  - ControladorDisparoEnemic
   layers:
   - Default
   - TransparentFX
