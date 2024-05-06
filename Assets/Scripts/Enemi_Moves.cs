@@ -34,16 +34,26 @@ public class Enemi_Moves : MonoBehaviour
         }
 
         // Controlar la dirección del movimiento y la animación
+        // Dentro del método Update()
+
+        // Controlar la dirección del movimiento y la animación
         if (esDerecha)
         {
             transform.position += Vector3.right * speed * Time.deltaTime;
-            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); // Cambiar la escala a (0.7, 0.7, 0.7)
+            if (transform.eulerAngles.y != 0) // Si no está mirando a la derecha
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0); // Rotar hacia la derecha
+            }
         }
         else
         {
             transform.position += Vector3.left * speed * Time.deltaTime;
-            transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f); // Cambiar la escala a (-0.7, 0.7, 0.7) para invertir en el eje X
+            if (transform.eulerAngles.y != 180) // Si no está mirando a la izquierda
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0); // Rotar hacia la izquierda
+            }
         }
+
 
         // Si el jugador está detectado, activar animación y arma
         if (playerDetected)
