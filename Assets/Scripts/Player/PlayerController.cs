@@ -188,6 +188,33 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ReducirAncho(extraWidthDecreaseAmount)); // Reducción extra por el misil
             }
         }
+        else if (collision.CompareTag("CopBullet"))
+        {
+            Animator turretAnimator = collision.GetComponent<Animator>();
+
+            if (turretAnimator != null)
+            {
+                turretAnimator.SetTrigger("Explode");
+            }
+
+            Rigidbody2D misilerb = collision.GetComponent<Rigidbody2D>();
+            if (misilerb != null)
+            {
+                misilerb.velocity = Vector2.zero;
+                misilerb.simulated = false;
+            }
+
+            StartCoroutine(DestruirBala(collision.gameObject));
+
+
+            // Cambiar el color del render a rojo claro durante 0.5 segundos
+            StartCoroutine(ColorImpactRender());
+
+            if (imageToModify != null)
+            {
+                StartCoroutine(ReducirAncho()); // Reducción extra por el misil
+            }
+        }
     }
 
     IEnumerator DestruirBala(GameObject bullet)
