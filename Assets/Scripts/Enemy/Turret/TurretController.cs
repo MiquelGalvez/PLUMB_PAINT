@@ -4,15 +4,16 @@ using System.Collections;
 
 public class TurretController : MonoBehaviour
 {
+    // Declaración de variables
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] AudioSource audiosource;
+    public AudioSource audiosource;
     [SerializeField] Transform spawnPoint;
     [SerializeField] float minShootInterval = 1f;
     [SerializeField] float maxShootInterval = 2f;
     [SerializeField] float bulletSpeed = 5f;
     [SerializeField] float shootDuration = 0.5f;
     [SerializeField] float maxBulletDistance = 10f;
-    [SerializeField] AudioClip takedamage;
+    public AudioClip takedamage;
     [SerializeField] Image fillImage;
     private EnemyHealthController enemyHealthController;
 
@@ -22,6 +23,7 @@ public class TurretController : MonoBehaviour
     private Animator turretAnimator;
     private int shotsReceived = 0;
     private SpriteRenderer turretRenderer;
+    private GameObject player;
 
     void Start()
     {
@@ -30,10 +32,26 @@ public class TurretController : MonoBehaviour
         currentShootInterval = Random.Range(minShootInterval, maxShootInterval);
         enemyHealthController = GetComponent<EnemyHealthController>();
         audiosource = GetComponent<AudioSource>();
+        player = GameObject.FindGameObjectWithTag("Player"); // Busca el jugador al iniciar
     }
 
     void Update()
     {
+        // Calcula la dirección del jugador
+        Vector3 playerDirection = player.transform.position - transform.position;
+
+        // Si el jugador está a la derecha de la torreta, voltear el sprite y disparar hacia la derecha
+        if (playerDirection.x > 0)
+        {
+            turretRenderer.flipX = true;
+            spawnPoint.localPosition = new Vector3(-spawnPoint.localPosition.x, spawnPoint.localPosition.y, spawnPoint.localPosition.z);
+        }
+        else
+        {
+            turretRenderer.flipX = false;
+            spawnPoint.localPosition = new Vector3(Mathf.Abs(spawnPoint.localPosition.x), spawnPoint.localPosition.y, spawnPoint.localPosition.z);
+        }
+
         shootTimer += Time.deltaTime;
 
         if (isShooting)
@@ -70,7 +88,16 @@ public class TurretController : MonoBehaviour
 
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.left * bulletSpeed;
+
+        // Disparar hacia la izquierda si el jugador está a la izquierda de la torreta
+        if (turretRenderer.flipX)
+        {
+            rb.velocity = Vector2.right * bulletSpeed;
+        }
+        else
+        {
+            rb.velocity = Vector2.left * bulletSpeed;
+        }
 
         StartCoroutine(DestroyBulletAfterDistance(bullet));
     }

@@ -1,20 +1,41 @@
 using UnityEngine;
+using TMPro;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 public class EnemyHealthController : MonoBehaviour
 {
-    [SerializeField] int maxHealth = 100;
+    [SerializeField] private GameObject scorePopUp;
+    [SerializeField] private int maxHealth = 100;
     private int currentHealth;
 
     private SpriteRenderer enemyRenderer;
+    private SpawnerController spawnerController;
+    private TurretController turretController;
     private Color originalColor;
-    private Color damageColor = new Color(1f, 0.5f, 0.5f, 1f); // Vermell Clar
+    private PlayerController playerController;
+    private Color damageColor = new Color(1f, 0.5f, 0.5f, 1f); // Light Red
 
-    void Start()
+    // Reference to the score counter
+    private TextMeshProUGUI scoreCounter;
+
+    private const float flashDuration = 0.5f;
+
+    private void Start()
     {
+        playerController = FindAnyObjectByType<PlayerController>();
+        turretController = GetComponent<TurretController>();
+        spawnerController = FindAnyObjectByType<SpawnerController>();
         currentHealth = maxHealth;
         enemyRenderer = GetComponent<SpriteRenderer>();
         originalColor = enemyRenderer.color;
+
+        // Find the score counter by tag
+        scoreCounter = FindTextMeshProUGUIByTag("ScoreCounter");
+        if (scoreCounter == null)
+        {
+            Debug.LogWarning("No score counter found with tag 'ScoreCounter'.");
+        }
     }
 
     public void TakeDamage(int damage)
@@ -26,25 +47,88 @@ public class EnemyHealthController : MonoBehaviour
         }
         else
         {
-            // Cambiar el color del enemigo temporalmente
             StartCoroutine(FlashColor(damageColor));
         }
     }
 
-    void Die()
+    private void Die()
     {
-        // Aquí puedes agregar cualquier lógica adicional cuando el enemigo muera
+        if (gameObject.CompareTag("Turret"))
+        {
+            Animator animator = GetComponent<Animator>();
+            if (animator != null)
+                animator.SetTrigger("Explode");
+            StartCoroutine(DelayedDestroy());
+        }
+        else
+        {
+            DestroyGameObject();
+        }
+    }
+
+    private IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(0.5f);
+        DestroyGameObject();
+    }
+    //COMO POLLAS DE 2 EN 2 
+    //ESTE CODIGO ES HOMOSEXUAL :D
+    private void DestroyGameObject()
+    {
+        int scoreValue = 0;
+        if (spawnerController != null)
+        {
+            spawnerController.EnemyDestroyed();
+        }
+        if (gameObject.CompareTag("Turret"))
+        {
+            scoreValue = 200;
+        }
+        if (gameObject.CompareTag("CopSpawn1"))
+        {
+            scoreValue = 100;
+        }
+        if (gameObject.CompareTag("Spaceship"))
+        {
+            scoreValue = 500;
+        }
+        GameObject popUp = Instantiate(scorePopUp, transform.position + (Vector3.up * 0.5f), Quaternion.identity);
+        popUp.GetComponent<ScorePopUp>().SetText("+ " + scoreValue.ToString());
+
+        if (scoreCounter != null)
+        {
+            int currentScore = int.Parse(scoreCounter.text);
+            currentScore += scoreValue;
+            scoreCounter.text = currentScore.ToString();
+        }
+
         Destroy(gameObject);
     }
 
-    IEnumerator FlashColor(Color flashColor)
+    private IEnumerator FlashColor(Color flashColor)
     {
-        // Cambiar el color a flashColor durante 0.5 segundos
         enemyRenderer.color = flashColor;
-
-        yield return new WaitForSeconds(0.5f);
-
-        // Devolver el color original después de 0.5 segundos
+        yield return new WaitForSeconds(flashDuration);
         enemyRenderer.color = originalColor;
+    }
+
+    // Helper method to find any object by type
+    private T FindAnyObjectByType<T>() where T : Component
+    {
+        return FindObjectOfType<T>();
+    }
+
+    // Helper method to find TextMeshProUGUI by tag
+    private TextMeshProUGUI FindTextMeshProUGUIByTag(string tag)
+    {
+        TextMeshProUGUI[] textMeshes = FindObjectsOfType<TextMeshProUGUI>();
+        foreach (TextMeshProUGUI textMesh in textMeshes)
+        {
+            if (textMesh.CompareTag(tag))
+            {
+                return textMesh;
+            }
+        }
+        return null; // If no object with the tag is found
     }
 }

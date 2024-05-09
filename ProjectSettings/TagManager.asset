@@ -3,12 +3,31 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Spawn2
+  - Ultimate
+  - Spawn1
+  - CopBullet
+  - Turret
+  - Bullet
+  - Misile
+  - Player Shoot
+  - UltimateShoot
+  - Ground
+  - Weapon
+  - ControladorDisparoEnemic
+  - Enemic
+  - CopSpawn1
+  - CopSpawn2
+  - PassScene
+  - Settings
+  - ScoreCounter
+  - Spaceship
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 

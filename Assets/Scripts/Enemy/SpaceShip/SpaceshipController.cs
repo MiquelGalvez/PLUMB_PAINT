@@ -95,7 +95,13 @@ public class SpaceshipController : MonoBehaviour
             float fillAmount = 0.01f;
             fillImage.fillAmount += fillAmount;
             Destroy(other.gameObject);
-            enemyHealthController.TakeDamage(2);
+            enemyHealthController.TakeDamage(1);
+        }
+        if (other.CompareTag("UltimateShoot"))
+        {
+            float fillAmount = 0.09f;
+            fillImage.fillAmount += fillAmount;
+            enemyHealthController.TakeDamage(15);
         }
     }
 }

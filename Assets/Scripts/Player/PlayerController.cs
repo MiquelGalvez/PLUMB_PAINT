@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     private Animator _animator;
     private AudioSource audioSource;
+    [SerializeField] GameObject canvasSettings;
     [SerializeField] private AudioClip walkingSound;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float runSpeed;
@@ -15,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject fadein;
     [SerializeField] private GameObject ultimateProjectilePrefab;
     [SerializeField] private float maxBulletUltDistance = 20f;
-    [SerializeField] private AudioClip explosionClip;
     private SpriteRenderer playerRender;
     private float extraFallSpeed = 10f;
     private float projectileSpeed = 10f;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float widthDecreaseAmount;
     [SerializeField] private float extraWidthDecreaseAmount; // Extra reducción para el misil
     private bool imageWidthZero = false;
+
 
     void Start()
     {
@@ -215,6 +217,10 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ReducirAncho()); // Reducción extra por el misil
             }
         }
+        else if (collision.CompareTag("PassScene"))
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 
     IEnumerator DestruirBala(GameObject bullet)
@@ -227,7 +233,7 @@ public class PlayerController : MonoBehaviour
     {
         float newFillAmount = imageToModify.fillAmount - (widthDecreaseAmount + extraDecrease) / imageToModify.rectTransform.sizeDelta.x;
         float elapsedTime = 0;
-        float duration = 0.5f;
+        float duration = 0.1f;
 
         while (elapsedTime < duration)
         {
@@ -254,5 +260,37 @@ public class PlayerController : MonoBehaviour
 
         // Devolver el color original después de 0.5 segundos
         playerRender.color = originalColor;
+    }
+
+    private void DeactivateScene()
+    {
+        // Desactivar todos los objetos en la escena excepto la cámara principal y el menú de configuración
+        GameObject[] sceneObjects = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in sceneObjects)
+        {
+            if (obj.CompareTag("MainCamera") || obj == canvasSettings)
+            {
+                continue;
+            }
+
+            obj.SetActive(false);
+        }
+    }
+
+    private void ActivateScene()
+    {
+        // Activar todos los objetos en la escena excepto la cámara principal y el menú de configuración
+        GameObject[] sceneObjects = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in sceneObjects)
+        {
+            if (obj.CompareTag("MainCamera") || obj == canvasSettings)
+            {
+                continue;
+            }
+
+            obj.SetActive(true);
+        }
     }
 }

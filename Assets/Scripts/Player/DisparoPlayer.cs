@@ -8,10 +8,9 @@ public class DisparoPlayer : MonoBehaviour
     [SerializeField] private GameObject balaPrefab;
     [SerializeField] private GameObject ultimatePrefab;
     [SerializeField] private Image ultimate;
-    [SerializeField] private AudioSource disparoSound;
     [SerializeField] private AudioClip disparoClip;
-    [SerializeField] private AudioSource ultimateSound;
     [SerializeField] private AudioClip ultimateClip;
+    private AudioSource source;
 
     public Vector2 direccionJugador = Vector2.right;
     private bool isFilling;
@@ -20,6 +19,7 @@ public class DisparoPlayer : MonoBehaviour
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         isFilling = false;
         // Comienza la corutina para hacer parpadear la imagen
         StartCoroutine(BlinkImage());
@@ -30,12 +30,12 @@ public class DisparoPlayer : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         direccionJugador = moveInput > 0 ? Vector2.right : (moveInput < 0 ? Vector2.left : direccionJugador);
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (disparoSound != null && disparoClip != null)
+            if (source != null && disparoClip != null)
             {
-                disparoSound.PlayOneShot(disparoClip);
-                Invoke("Disparar", 0.2f);
+                source.PlayOneShot(disparoClip);
+                Disparar();
             }
         }
 
@@ -46,12 +46,10 @@ public class DisparoPlayer : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && ultimate.fillAmount == 1f)
         {
-            if (ultimateSound != null && ultimateClip != null)
+            if (source != null && ultimateClip != null)
             {
-                ultimateSound.PlayOneShot(ultimateClip);
-                Invoke("DispararUltimate", 1.5f);
-
-                // No guardamos la posición inicial aquí, la guardamos cuando se dispara la ultimate
+                source.PlayOneShot(ultimateClip);
+                Invoke("DispararUltimate", 1f);
             }
 
             ultimate.fillAmount = 0f;
@@ -64,30 +62,48 @@ public class DisparoPlayer : MonoBehaviour
         posicionCursor.z = 0f;
 
         Vector2 direccionDisparo = direccionJugador;
+        GameObject balaInstance = null; // Declarar la variable fuera del bloque if
 
         // Verifica si la tecla W está siendo presionada
         if (Input.GetKey(KeyCode.W))
         {
-            direccionDisparo.y = 1f; // Ajusta la dirección de disparo hacia arriba en el eje Y
-            direccionDisparo.x = 90f; // Anula la dirección de disparo en el eje X
+            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia arriba
+                                           // Si la dirección del disparo es hacia arriba, rotar la bala 90 grados en Z
+            Quaternion rotacion = Quaternion.Euler(0f, 0f, 90f);
+            // Instanciar la bala con la rotación adecuada
+            balaInstance = Instantiate(balaPrefab, controladorDisparo.position, rotacion);
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
+        {
+            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia abajo
+                                             // Si la dirección del disparo es hacia abajo, rotar la bala -90 grados en Z
+            Quaternion rotacion = Quaternion.Euler(0f, 0f, -90f);
+            // Instanciar la bala con la rotación adecuada
+            balaInstance = Instantiate(balaPrefab, controladorDisparo.position, rotacion);
+        }
+        else
+        {
+            // Si no se está presionando ni W ni S, instanciar la bala sin rotación especial
+            balaInstance = Instantiate(balaPrefab, controladorDisparo.position, Quaternion.identity);
         }
 
-        GameObject balaInstance = Instantiate(balaPrefab, controladorDisparo.position, Quaternion.identity);
-        Bala balaScript = balaInstance.GetComponent<Bala>();
-        if (balaScript != null)
+        // Verificar si se ha instanciado una bala antes de intentar obtener el componente
+        if (balaInstance != null)
         {
-            balaScript.EstablecerDireccionDeDisparo(direccionDisparo);
-
-            // Verifica si la dirección de disparo es hacia arriba
-            if (direccionDisparo.y > 0f)
+            // Obtener el script de la bala y establecer la dirección de disparo
+            Bala balaScript = balaInstance.GetComponent<Bala>();
+            if (balaScript != null)
             {
-                // Rota la instancia de la bala en el eje Y en 90 grados
-                balaInstance.transform.Rotate(0f, 0f, 90f);
+                balaScript.EstablecerDireccionDeDisparo(direccionDisparo);
+            }
+            else
+            {
+                Debug.LogWarning("El prefab de la bala no tiene el componente Bala adjunto.");
             }
         }
         else
         {
-            Debug.LogWarning("El prefab de la bala no tiene el componente Bala adjunto.");
+            Debug.LogWarning("No se pudo instanciar la bala.");
         }
     }
 
@@ -101,15 +117,56 @@ public class DisparoPlayer : MonoBehaviour
         // Guardar la posición inicial al disparar la ultimate
         posicionInicial = transform.position;
 
-        GameObject balaInstance = Instantiate(ultimatePrefab, controladorDisparo.position, Quaternion.identity);
-        Bala balaScript = balaInstance.GetComponent<Bala>();
-        if (balaScript != null)
+        // Verifica si la tecla W está siendo presionada
+        if (Input.GetKey(KeyCode.W))
         {
-            balaScript.EstablecerDireccionDeDisparo(direccionDisparo);
+            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia arriba
+
+            // Si disparamos hacia arriba, giramos la instancia en 90 grados en el eje Y
+            Quaternion rotation = Quaternion.Euler(0, 0, 90);
+            GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, rotation);
+            Bala balaScript = ultimateInstance.GetComponent<Bala>();
+            if (balaScript != null)
+            {
+                balaScript.EstablecerDireccionDeDisparo(direccionDisparo);
+            }
+            else
+            {
+                Debug.LogWarning("El prefab de la bala no tiene el componente Bala adjunto.");
+            }
         }
         else
         {
-            Debug.LogWarning("El prefab de la bala no tiene el componente Bala adjunto.");
+            if (direccionDisparo.x > 0f)
+            {
+                // Si no disparamos hacia arriba, mantenemos la rotación normal
+                GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, Quaternion.identity);
+                Bala balaScript = ultimateInstance.GetComponent<Bala>();
+                if (balaScript != null)
+                {
+                    balaScript.EstablecerDireccionDeDisparo(direccionDisparo);
+                }
+                else
+                {
+                    Debug.LogWarning("El prefab de la bala no tiene el componente Bala adjunto.");
+                }
+            }
+            else if (direccionDisparo.x < 0f)
+            {
+                Quaternion rotation = Quaternion.Euler(0, 0, 180);
+                // Si no disparamos hacia arriba, mantenemos la rotación normal
+                GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, rotation);
+                Bala balaScript = ultimateInstance.GetComponent<Bala>();
+                if (balaScript != null)
+                {
+                    balaScript.EstablecerDireccionDeDisparo(Vector2.right);
+                }
+                else
+                {
+                    Debug.LogWarning("El prefab de la bala no tiene el componente Bala adjunto.");
+                }
+            }
+            
         }
 
         // Aplicar retroceso al disparar la ultimate
@@ -123,7 +180,7 @@ public class DisparoPlayer : MonoBehaviour
         float recoilAmountY = 0.0f; // Ajusta la cantidad de retroceso en el eje Y según sea necesario
 
         // Calcula el vector de retroceso en el eje X
-        Vector2 recoilDirectionX = -transform.right; // Invertimos la dirección del jugador en el eje X
+        Vector2 recoilDirectionX = -direccionJugador.normalized; // Invertimos la dirección del jugador en el eje X
         Vector2 recoilVectorX = recoilDirectionX * recoilAmountX;
 
         // Calcula el vector de retroceso en el eje Y

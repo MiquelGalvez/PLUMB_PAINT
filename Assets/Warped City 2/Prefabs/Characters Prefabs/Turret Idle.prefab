@@ -165,7 +165,7 @@ MonoBehaviour:
   minShootInterval: 1
   maxShootInterval: 2
   bulletSpeed: 5
-  shootDuration: 0.5
+  shootDuration: 1
   maxBulletDistance: 10
   takedamage: {fileID: 8300000, guid: ad12be7c260b61f44ab7b0ca53529f8d, type: 3}
   fillImage: {fileID: 0}
@@ -216,7 +216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0220e7b516c089f43abce85584f78f53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  scorePopUp: {fileID: 3177162899659784583, guid: 3bf326d23e54dd24b870f7df29e1d596, type: 3}
+  maxHealth: 50
+  scoreCounter: {fileID: 0}
 --- !u!82 &3036987965665369004
 AudioSource:
   m_ObjectHideFlags: 0

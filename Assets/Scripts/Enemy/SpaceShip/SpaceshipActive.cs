@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class SpaceshipActive : MonoBehaviour
 {
-    public GameObject objectToCount; // El GameObject cuyos hijos se contarán
-    public GameObject objectToActivate; // El GameObject que se activará cuando objectToCount no tenga hijos
-    public GameObject objectToActivate2; // El GameObject que se activará cuando objectToCount no tenga hijos
-    public GameObject objectToActivate3; // El GameObject que se activará cuando objectToCount no tenga hijos
+    public GameObject objectToCount;
+    public GameObject objectToActivate;
+    public GameObject objectToActivate2;
 
     // Update is called once per frame
     void Update()
@@ -16,14 +15,12 @@ public class SpaceshipActive : MonoBehaviour
             // Activar el GameObject deseado si no hay hijos
             objectToActivate.SetActive(true);
             objectToActivate2.SetActive(true);
-            objectToActivate3.SetActive(true);
         }
         else
         {
             // Desactivar el GameObject deseado si hay hijos
             objectToActivate.SetActive(false);
             objectToActivate2.SetActive(false);
-            objectToActivate3.SetActive(false);
         }
     }
 }
