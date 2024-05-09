@@ -6,9 +6,11 @@ public class CopController : MonoBehaviour
 {
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform spawnPoint;
+    [SerializeField] Transform spawnPoint2;
     [SerializeField] float minShootInterval = 1f;
     [SerializeField] float maxShootInterval = 2f;
-    [SerializeField] float bulletSpeed = 5f;
+    [SerializeField] float bulletSpeedRight = 10f;
+    [SerializeField] float bulletSpeedDown = 5f;
     [SerializeField] float shootDuration = 0.5f;
     [SerializeField] float maxBulletDistance = 10f;
     private Image fillImage;
@@ -30,8 +32,9 @@ public class CopController : MonoBehaviour
     [SerializeField] float groundCheckDistance = 0.5f; // Distance to check for ground
     private bool isGrounded = false; // Variable to indicate if the cop is grounded
     private Rigidbody2D rb;
-    private bool facingRight = false;
+    private bool facingLeft = false;
     private Animator copAnimator;
+    private GameObject player;
     private float strongerGravityForce = 10f;
     private Vector2 gravity = new Vector2(0, -5f); // Ajusta este valor según sea necesario
 
@@ -41,8 +44,9 @@ public class CopController : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         copAnimator = GetComponent<Animator>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTransform = GameObject.FindGameObjectWithTag("ToGo").transform;
         copRenderer = GetComponent<SpriteRenderer>();
         enemyHealthController = GetComponent<EnemyHealthController>();
         fillImage = GameObject.FindGameObjectWithTag("Ultimate").GetComponent<Image>();
@@ -69,16 +73,18 @@ public class CopController : MonoBehaviour
     {
         copAnimator.SetBool("Idle", false);
 
-        Vector2 rayDirection = new Vector2(-1, -1).normalized;
+        Vector2 rayDirection = new Vector2(1, -1).normalized;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, groundCheckDistance, groundLayerMask);
         bool isGrounded = hit.collider != null;
-
+        // Dibujar el raycast en la escena
+        Debug.DrawRay(transform.position, rayDirection * groundCheckDistance, Color.red);
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
         // Move the cop if it's grounded and not too close to the player
         if (isGrounded && distanceToPlayer > stopDistanceFromPlayer)
         {
-            transform.Translate(Vector2.left * movementSpeed * Time.deltaTime);
+            FaceRight();
+            transform.Translate(Vector2.right * movementSpeed * Time.deltaTime);
             hasJumped = false;
         }
         else if (!isGrounded)
@@ -104,18 +110,8 @@ public class CopController : MonoBehaviour
             }
 
             // Smooth horizontal movement during jump
-            float horizontalVelocity = Mathf.Lerp(rb.velocity.x, -movementSpeed * jumpMovementSpeed, 0.5f);
+            float horizontalVelocity = Mathf.Lerp(rb.velocity.x, movementSpeed, 0.5f);
             rb.velocity = new Vector2(horizontalVelocity, rb.velocity.y);
-        }
-
-        // Change the cop's facing direction based on player's position
-        if (playerTransform.position.x > transform.position.x && !facingRight)
-        {
-            FaceRight();
-        }
-        else if (playerTransform.position.x < transform.position.x && facingRight)
-        {
-            FaceLeft();
         }
 
         if (distanceToPlayer <= stopDistanceFromPlayer)
@@ -128,21 +124,35 @@ public class CopController : MonoBehaviour
 
     void Shoot()
     {
-        if (facingRight)
+        // Obtener la dirección hacia el jugador
+        Vector2 direction = (player.transform.position - spawnPoint.position).normalized;
+        // Shoot to the right
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (direction.x < 0)
         {
-            GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.velocity = Vector2.right * bulletSpeed;
+            FaceLeft();
+            rb.velocity = Vector2.left * bulletSpeedRight;
         }
-        else if (!facingRight)
+        else if (direction.x > 0)
         {
-            GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.velocity = Vector2.left * bulletSpeed;
+            FaceRight();
+            rb.velocity = Vector2.right * bulletSpeedRight;
         }
 
         audioSource.Play();
     }
+
+    void ShootDown()
+    {
+        // Shoot to the right
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint2.position, Quaternion.identity);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.down * bulletSpeedDown;
+
+        audioSource.Play();
+    }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -164,7 +174,7 @@ public class CopController : MonoBehaviour
     // Method to make the enemy face right
     public void FaceRight()
     {
-        if (!facingRight)
+        if (!facingLeft)
         {
             Flip();
         }
@@ -173,7 +183,7 @@ public class CopController : MonoBehaviour
     // Method to make the enemy face left
     public void FaceLeft()
     {
-        if (facingRight)
+        if (facingLeft)
         {
             Flip();
         }
@@ -182,7 +192,7 @@ public class CopController : MonoBehaviour
     // Method to flip the enemy's direction
     private void Flip()
     {
-        facingRight = !facingRight; // Change direction
+        facingLeft = !facingLeft; // Change direction
 
         // Get the current scale of the enemy
         Vector3 scale = transform.localScale;

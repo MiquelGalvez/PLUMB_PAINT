@@ -38,6 +38,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5539580423040061369}
+  - {fileID: 2402293557539362536}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9167123269755269356
@@ -127,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2596542138769671106, guid: 99516057366da0e4dbc157321a2aff11, type: 3}
   spawnPoint: {fileID: 5539580423040061369}
+  spawnPoint2: {fileID: 2402293557539362536}
   minShootInterval: 1
   maxShootInterval: 2
   bulletSpeed: 5
@@ -152,7 +154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scorePopUp: {fileID: 3177162899659784583, guid: 3bf326d23e54dd24b870f7df29e1d596, type: 3}
   maxHealth: 50
-  scoreCounter: {fileID: 0}
 --- !u!61 &7838643374614297267
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -392,7 +393,38 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.158, y: -0.005, z: 0}
-  m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 0.83333325}
+  m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1144992059215418025}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7041567898351883563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2402293557539362536}
+  m_Layer: 0
+  m_Name: SpawnerBulletDown
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2402293557539362536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7041567898351883563}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.09, y: -0.221, z: 0}
+  m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1144992059215418025}

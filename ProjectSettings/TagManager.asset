@@ -23,6 +23,7 @@ TagManager:
   - Settings
   - ScoreCounter
   - Spaceship
+  - ToGo
   layers:
   - Default
   - TransparentFX

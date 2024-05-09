@@ -30,7 +30,15 @@ public class DisparoPlayer : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         direccionJugador = moveInput > 0 ? Vector2.right : (moveInput < 0 ? Vector2.left : direccionJugador);
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        // Verifica si el jugador está mirando hacia la izquierda antes de permitir el disparo hacia esa dirección
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) && direccionJugador.x > 0) || (Input.GetKeyDown(KeyCode.RightArrow) && direccionJugador.x < 0))
+        {
+            // El jugador no puede disparar hacia la izquierda si no está mirando en esa dirección
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (source != null && disparoClip != null)
             {
@@ -60,34 +68,36 @@ public class DisparoPlayer : MonoBehaviour
     {
         Vector3 posicionCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         posicionCursor.z = 0f;
-
+        Quaternion rotation = Quaternion.Euler(0, 0, 0);
         Vector2 direccionDisparo = direccionJugador;
         GameObject balaInstance = null; // Declarar la variable fuera del bloque if
 
-        // Verifica si la tecla W está siendo presionada
-        if (Input.GetKey(KeyCode.W))
+        // Detecta qué flecha se ha presionado y ajusta la dirección de disparo
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia arriba
-                                           // Si la dirección del disparo es hacia arriba, rotar la bala 90 grados en Z
-            Quaternion rotacion = Quaternion.Euler(0f, 0f, 90f);
-            // Instanciar la bala con la rotación adecuada
-            balaInstance = Instantiate(balaPrefab, controladorDisparo.position, rotacion);
+            rotation = Quaternion.Euler(0, 0, 90);
+
         }
-        else if (Input.GetKey(KeyCode.LeftShift))
+        else if (Input.GetKey(KeyCode.DownArrow))
         {
             direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia abajo
-                                             // Si la dirección del disparo es hacia abajo, rotar la bala -90 grados en Z
-            Quaternion rotacion = Quaternion.Euler(0f, 0f, -90f);
-            // Instanciar la bala con la rotación adecuada
-            balaInstance = Instantiate(balaPrefab, controladorDisparo.position, rotacion);
+            rotation = Quaternion.Euler(0, 0, -90);
         }
-        else
+        else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            // Si no se está presionando ni W ni S, instanciar la bala sin rotación especial
-            balaInstance = Instantiate(balaPrefab, controladorDisparo.position, Quaternion.identity);
+            direccionDisparo = Vector2.left; // Cambia la dirección de disparo hacia la izquierda
+
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia la derecha
         }
 
-        // Verificar si se ha instanciado una bala antes de intentar obtener el componente
+        // Instancia la bala con la dirección de disparo adecuada
+        balaInstance = Instantiate(balaPrefab, controladorDisparo.position, rotation);
+
+        // Verifica si se ha instanciado una bala antes de intentar obtener el componente
         if (balaInstance != null)
         {
             // Obtener el script de la bala y establecer la dirección de disparo
@@ -122,8 +132,25 @@ public class DisparoPlayer : MonoBehaviour
         {
             direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia arriba
 
-            // Si disparamos hacia arriba, giramos la instancia en 90 grados en el eje Y
+            // Si disparamos hacia arriba, giramos la instancia en 90 grados en el eje Z
             Quaternion rotation = Quaternion.Euler(0, 0, 90);
+            GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, rotation);
+            Bala balaScript = ultimateInstance.GetComponent<Bala>();
+            if (balaScript != null)
+            {
+                balaScript.EstablecerDireccionDeDisparo(direccionDisparo);
+            }
+            else
+            {
+                Debug.LogWarning("El prefab de la bala no tiene el componente Bala adjunto.");
+            }
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            direccionDisparo = Vector2.down; // Cambia la dirección de disparo hacia abajo
+
+            // Si disparamos hacia abajo, giramos la instancia en -90 grados en el eje Z
+            Quaternion rotation = Quaternion.Euler(0, 0, -90);
             GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, rotation);
             Bala balaScript = ultimateInstance.GetComponent<Bala>();
             if (balaScript != null)
@@ -139,7 +166,7 @@ public class DisparoPlayer : MonoBehaviour
         {
             if (direccionDisparo.x > 0f)
             {
-                // Si no disparamos hacia arriba, mantenemos la rotación normal
+                // Si no disparamos hacia arriba ni hacia abajo, mantenemos la rotación normal
                 GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, Quaternion.identity);
                 Bala balaScript = ultimateInstance.GetComponent<Bala>();
                 if (balaScript != null)
@@ -153,8 +180,8 @@ public class DisparoPlayer : MonoBehaviour
             }
             else if (direccionDisparo.x < 0f)
             {
+                // Si no disparamos hacia arriba ni hacia abajo, mantenemos la rotación normal pero invertida
                 Quaternion rotation = Quaternion.Euler(0, 0, 180);
-                // Si no disparamos hacia arriba, mantenemos la rotación normal
                 GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, rotation);
                 Bala balaScript = ultimateInstance.GetComponent<Bala>();
                 if (balaScript != null)
@@ -166,7 +193,7 @@ public class DisparoPlayer : MonoBehaviour
                     Debug.LogWarning("El prefab de la bala no tiene el componente Bala adjunto.");
                 }
             }
-            
+
         }
 
         // Aplicar retroceso al disparar la ultimate
