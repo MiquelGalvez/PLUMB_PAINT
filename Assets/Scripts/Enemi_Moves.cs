@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemi_Moves : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Enemi_Moves : MonoBehaviour
     private Animator animator;
     private bool playerDetected = false;
     private GameObject[] weapons;
+    [SerializeField] Image fillImage;
+    private EnemyHealthController enemyHealthController;
 
     private void Start()
     {
@@ -19,6 +22,16 @@ public class Enemi_Moves : MonoBehaviour
         // Obteniendo el componente Animator
         animator = GetComponent<Animator>();
         weapons = GameObject.FindGameObjectsWithTag("Weapon");
+        enemyHealthController = GetComponent<EnemyHealthController>();
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Si no hay un componente SpriteRenderer, agrégalo
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+            // Asigna el sprite que desees al SpriteRenderer si es necesario
+            // spriteRenderer.sprite = tuSprite;
+        }
     }
 
     private void Update()
@@ -92,6 +105,22 @@ public class Enemi_Moves : MonoBehaviour
         {
             contadorT = tiempoParaCambiar;
             esDerecha = !esDerecha;
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player Shoot"))
+        {
+            float fillAmount = 0.01f;
+            fillImage.fillAmount += fillAmount;
+            Destroy(other.gameObject);
+            enemyHealthController.TakeDamage(1);
+        }
+        if (other.CompareTag("UltimateShoot"))
+        {
+            float fillAmount = 0.09f;
+            fillImage.fillAmount += fillAmount;
+            enemyHealthController.TakeDamage(15);
         }
     }
 }
