@@ -217,8 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scorePopUp: {fileID: 3177162899659784583, guid: 3bf326d23e54dd24b870f7df29e1d596, type: 3}
-  maxHealth: 50
-  scoreCounter: {fileID: 0}
+  maxHealth: 25
 --- !u!82 &3036987965665369004
 AudioSource:
   m_ObjectHideFlags: 0
@@ -228,7 +227,7 @@ AudioSource:
   m_GameObject: {fileID: 3809959971946328322}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 68a30c531652c3d44a2656765ea6a67b, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.328

@@ -15,7 +15,7 @@ public class SpaceshipController : MonoBehaviour
     [SerializeField] GameObject bulletPrefab; // Prefab de la bala
     [SerializeField] Transform spawnPoint; // Punto de generación de la bala
     [SerializeField] float minShootInterval = 1f; // Intervalo mínimo entre disparos
-    [SerializeField] float maxShootInterval = 4f; // Intervalo máximo entre disparos
+    [SerializeField] float maxShootInterval = 2f; // Intervalo máximo entre disparos
 
     private float shootTimer = 0f; // Temporizador de disparo
     private float currentShootInterval; // Intervalo actual entre disparos

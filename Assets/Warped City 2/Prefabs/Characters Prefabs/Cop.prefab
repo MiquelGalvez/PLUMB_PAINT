@@ -131,7 +131,8 @@ MonoBehaviour:
   spawnPoint2: {fileID: 2402293557539362536}
   minShootInterval: 1
   maxShootInterval: 2
-  bulletSpeed: 5
+  bulletSpeedRight: 10
+  bulletSpeedDown: 5
   shootDuration: 0.5
   maxBulletDistance: 10
   spawner: {fileID: 0}
@@ -153,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scorePopUp: {fileID: 3177162899659784583, guid: 3bf326d23e54dd24b870f7df29e1d596, type: 3}
-  maxHealth: 50
+  maxHealth: 25
 --- !u!61 &7838643374614297267
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -280,7 +281,7 @@ AudioSource:
   m_GameObject: {fileID: 1735341820128141624}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 68a30c531652c3d44a2656765ea6a67b, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6e41c344a27f47b48800c85b7128b848, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

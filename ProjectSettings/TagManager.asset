@@ -24,6 +24,7 @@ TagManager:
   - ScoreCounter
   - Spaceship
   - ToGo
+  - NamePlayer
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class DisparoPlayer : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class DisparoPlayer : MonoBehaviour
 
     public Vector2 direccionJugador = Vector2.right;
     private bool isFilling;
+    private bool isShooting; // Variable para controlar si se está disparando continuamente
+    private float cooldown = 0.5f; // Cooldown entre cada bala
+    private float lastShotTime; // Tiempo del último disparo
 
     private Vector2 posicionInicial; // Guarda la posición inicial del jugador al disparar la ultimate
 
@@ -21,6 +25,8 @@ public class DisparoPlayer : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
         isFilling = false;
+        isShooting = false;
+        lastShotTime = -cooldown; // Inicializa el último tiempo de disparo para que pueda disparar de inmediato
         // Comienza la corutina para hacer parpadear la imagen
         StartCoroutine(BlinkImage());
     }
@@ -30,20 +36,39 @@ public class DisparoPlayer : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         direccionJugador = moveInput > 0 ? Vector2.right : (moveInput < 0 ? Vector2.left : direccionJugador);
 
+
         // Verifica si el jugador está mirando hacia la izquierda antes de permitir el disparo hacia esa dirección
-        if ((Input.GetKeyDown(KeyCode.LeftArrow) && direccionJugador.x > 0) || (Input.GetKeyDown(KeyCode.RightArrow) && direccionJugador.x < 0))
+        if ((Input.GetKey(KeyCode.LeftArrow) && direccionJugador.x > 0) || (Input.GetKey(KeyCode.RightArrow) && direccionJugador.x < 0))
         {
             // El jugador no puede disparar hacia la izquierda si no está mirando en esa dirección
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
-            Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+
+        // Si la tecla de disparo está siendo mantenida y ha pasado el cooldown
+        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
+            Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) &&
+            Time.time >= lastShotTime + cooldown)
         {
-            if (source != null && disparoClip != null)
+            isShooting = true;
+        }
+        else
+        {
+            isShooting = false;
+        }
+
+        // Si se está disparando continuamente
+        if (isShooting)
+        {
+            // Si el cooldown ha pasado, dispara y actualiza el tiempo del último disparo
+            if (Time.time >= lastShotTime + cooldown)
             {
-                source.PlayOneShot(disparoClip);
-                Disparar();
+                lastShotTime = Time.time;
+                if (source != null && disparoClip != null)
+                {
+                    source.PlayOneShot(disparoClip);
+                    Disparar();
+                }
             }
         }
 
@@ -57,7 +82,7 @@ public class DisparoPlayer : MonoBehaviour
             if (source != null && ultimateClip != null)
             {
                 source.PlayOneShot(ultimateClip);
-                Invoke("DispararUltimate", 1f);
+                Invoke("DispararUltimate", 1.5f);
             }
 
             ultimate.fillAmount = 0f;
@@ -128,7 +153,7 @@ public class DisparoPlayer : MonoBehaviour
         posicionInicial = transform.position;
 
         // Verifica si la tecla W está siendo presionada
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia arriba
 
@@ -147,7 +172,7 @@ public class DisparoPlayer : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            direccionDisparo = Vector2.down; // Cambia la dirección de disparo hacia abajo
+            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia abajo
 
             // Si disparamos hacia abajo, giramos la instancia en -90 grados en el eje Z
             Quaternion rotation = Quaternion.Euler(0, 0, -90);

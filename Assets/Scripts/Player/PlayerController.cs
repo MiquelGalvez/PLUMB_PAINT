@@ -7,19 +7,14 @@ public class PlayerController : MonoBehaviour
 {
     private Animator _animator;
     private AudioSource audioSource;
-    [SerializeField] GameObject canvasSettings;
-    [SerializeField] private AudioClip walkingSound;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private GameObject youdied;
     [SerializeField] private GameObject hud;
     [SerializeField] private GameObject fadein;
-    [SerializeField] private GameObject ultimateProjectilePrefab;
-    [SerializeField] private float maxBulletUltDistance = 20f;
     private SpriteRenderer playerRender;
     private float extraFallSpeed = 10f;
-    private float projectileSpeed = 10f;
     private Color originalColor;
     private Color damageColor = new Color(1f, 0.5f, 0.5f, 1f);
     private Camera cam;
@@ -28,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private bool isFacingRight = true;
     private bool isGrounded;
     [SerializeField] private Image imageToModify;
-    [SerializeField] private Image ultimate;
     [SerializeField] private float widthDecreaseAmount;
     [SerializeField] private float extraWidthDecreaseAmount; // Extra reducción para el misil
     private bool imageWidthZero = false;
@@ -54,7 +48,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(moveInput * moveSpeedCurrent, rb.velocity.y);
 
         // Check if the player is grounded and can jump
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKey(KeyCode.W))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             _animator.SetBool("IsJumping", true);
@@ -71,15 +65,11 @@ public class PlayerController : MonoBehaviour
         {
             isRunning = true;
             _animator.SetBool("IsRunning", true);
-            audioSource.clip = walkingSound;
-            audioSource.loop = true;
-            audioSource.Play();
         }
         else if ((moveInput == 0 || !isGrounded) && isRunning)
         {
             isRunning = false;
             _animator.SetBool("IsRunning", false);
-            audioSource.Stop();
         }
 
         if (imageWidthZero)
@@ -219,7 +209,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.CompareTag("PassScene"))
         {
-            SceneManager.LoadScene(2);
+            PassLevel();
         }
     }
 
@@ -251,6 +241,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void PassLevel()
+    {
+        SceneManager.LoadScene(3);
+    }
+
     IEnumerator ColorImpactRender()
     {
         // Cambiar el color a flashColor durante 0.5 segundos
@@ -260,37 +255,5 @@ public class PlayerController : MonoBehaviour
 
         // Devolver el color original después de 0.5 segundos
         playerRender.color = originalColor;
-    }
-
-    private void DeactivateScene()
-    {
-        // Desactivar todos los objetos en la escena excepto la cámara principal y el menú de configuración
-        GameObject[] sceneObjects = FindObjectsOfType<GameObject>();
-
-        foreach (GameObject obj in sceneObjects)
-        {
-            if (obj.CompareTag("MainCamera") || obj == canvasSettings)
-            {
-                continue;
-            }
-
-            obj.SetActive(false);
-        }
-    }
-
-    private void ActivateScene()
-    {
-        // Activar todos los objetos en la escena excepto la cámara principal y el menú de configuración
-        GameObject[] sceneObjects = FindObjectsOfType<GameObject>();
-
-        foreach (GameObject obj in sceneObjects)
-        {
-            if (obj.CompareTag("MainCamera") || obj == canvasSettings)
-            {
-                continue;
-            }
-
-            obj.SetActive(true);
-        }
     }
 }

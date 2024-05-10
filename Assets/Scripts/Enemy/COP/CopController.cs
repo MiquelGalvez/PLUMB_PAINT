@@ -38,9 +38,8 @@ public class CopController : MonoBehaviour
     private float strongerGravityForce = 10f;
     private Vector2 gravity = new Vector2(0, -5f); // Ajusta este valor según sea necesario
 
-
     private SpawnerController spawnerController;
-
+    private float edgeCheckDistance = 0.2f; // Distance to check for platform edge
 
     void Start()
     {
@@ -76,16 +75,23 @@ public class CopController : MonoBehaviour
         Vector2 rayDirection = new Vector2(1, -1).normalized;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, groundCheckDistance, groundLayerMask);
         bool isGrounded = hit.collider != null;
-        // Dibujar el raycast en la escena
         Debug.DrawRay(transform.position, rayDirection * groundCheckDistance, Color.red);
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
 
         // Move the cop if it's grounded and not too close to the player
         if (isGrounded && distanceToPlayer > stopDistanceFromPlayer)
         {
-            FaceRight();
             transform.Translate(Vector2.right * movementSpeed * Time.deltaTime);
             hasJumped = false;
+
+            // Check if there's a platform edge to jump
+            RaycastHit2D edgeHit = Physics2D.Raycast(transform.position + Vector3.right * edgeCheckDistance, Vector2.down, groundCheckDistance, groundLayerMask);
+            if (!edgeHit)
+            {
+                // No platform edge detected, flip and start moving left
+                Flip();
+                FaceLeft();
+            }
         }
         else if (!isGrounded)
         {
@@ -100,12 +106,12 @@ public class CopController : MonoBehaviour
             // If the cop is within the stop distance from the player, apply stronger downward force
             if (distanceToPlayer <= stopDistanceFromPlayer)
             {
-                // Aplicar una fuerza de gravedad más fuerte
+                // Apply stronger gravity
                 rb.AddForce(Vector2.down * strongerGravityForce, ForceMode2D.Force);
             }
             else
             {
-                // Aplicar la gravedad normal
+                // Apply normal gravity
                 rb.velocity += gravity * Time.deltaTime;
             }
 
@@ -201,10 +207,4 @@ public class CopController : MonoBehaviour
         // Apply the new scale to the enemy
         transform.localScale = scale;
     }
-
-    /*    // Method to assign the SpawnerController
-        public void SetSpawner(SpawnerController spawner)
-        {
-            this.spawner = spawner;
-        }*/
 }
