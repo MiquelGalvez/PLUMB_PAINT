@@ -5,9 +5,9 @@ using UnityEngine;
 public class AtackBoss : MonoBehaviour
 {
     [SerializeField] GameObject prefab; // Prefab a instanciar
-    private float tiempoMinimo = 1f; // Tiempo mínimo entre instancias
+    private float tiempoMinimo = 5f; // Tiempo mínimo entre instancias
     private float tiempoMaximo = 10f; // Tiempo máximo entre instancias
-    private float velocidadMovimiento = 2f; // Velocidad de movimiento del prefab hacia la izquierda
+    private float velocidadMovimiento = 3f; // Velocidad de movimiento del prefab hacia la izquierda
 
     private float tiempoSiguienteInstancia; // Tiempo para la próxima instancia
 

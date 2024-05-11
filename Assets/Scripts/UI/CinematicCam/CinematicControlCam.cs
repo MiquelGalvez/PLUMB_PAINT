@@ -33,22 +33,9 @@ public class CinematicControlCam : MonoBehaviour
             // Verificar si la cámara está lo suficientemente cerca de la posición deseada en el eje X
             if (Mathf.Abs(transform.position.x - puntoDestino.position.x) < tolerancia)
             {
-
-                
-                Invoke("ActivarPlayer", 5f);
                 // Establecer la bandera de alcanzadoDestino como verdadera
                 alcanzadoDestino = true;
             }
         }
-    }
-
-    private void ActivarPlayer()
-    {
-        // Desactivar la cámara
-        gameObject.SetActive(false);
-        SpawnCars.SetActive(true);
-        // Activar otros objetos
-        player.SetActive(true);
-        UI.SetActive(true);
     }
 }

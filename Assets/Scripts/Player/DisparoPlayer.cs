@@ -94,8 +94,6 @@ public class DisparoPlayer : MonoBehaviour
 
     private void Disparar()
     {
-        Vector3 posicionCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        posicionCursor.z = 0f;
         Quaternion rotation = Quaternion.Euler(0, 0, 0);
         Vector2 direccionDisparo = direccionJugador;
         GameObject balaInstance = null; // Declarar la variable fuera del bloque if

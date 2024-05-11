@@ -2,9 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using TMPro;
+using System;
+using System.Threading.Tasks;
 
 public class PlayerController : MonoBehaviour
 {
+    private PlayerData playerData;
     private Animator _animator;
     private AudioSource audioSource;
     [SerializeField] private float moveSpeed;
@@ -12,8 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private GameObject youdied;
     [SerializeField] private GameObject hud;
-    [SerializeField] private GameObject fadein;
     private SpriteRenderer playerRender;
+    private bool levelPassed = false;
     private float extraFallSpeed = 10f;
     private Color originalColor;
     private Color damageColor = new Color(1f, 0.5f, 0.5f, 1f);
@@ -26,18 +32,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float widthDecreaseAmount;
     [SerializeField] private float extraWidthDecreaseAmount; // Extra reducción para el misil
     private bool imageWidthZero = false;
+    [SerializeField] private TextMeshProUGUI scoreCounter;
+    private DatabaseAccess databaseaccess;
 
 
     void Start()
     {
-        fadein.gameObject.SetActive(true);
+        Time.timeScale = 1f;
+        databaseaccess = new DatabaseAccess();
         rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         cam = Camera.main;
         Cursor.visible = false;
+        // Guardar en GameData
+        playerData = GameData.playerData;
         audioSource = GetComponent<AudioSource>();
         playerRender = GetComponent<SpriteRenderer>();
         originalColor = playerRender.color;
+        scoreCounter = FindTextMeshProUGUIByTag("ScoreCounter");
+        if (scoreCounter == null)
+        {
+            Debug.LogWarning("No score counter found with tag 'ScoreCounter'.");
+        }
     }
 
     void Update()
@@ -74,12 +90,9 @@ public class PlayerController : MonoBehaviour
 
         if (imageWidthZero)
         {
-            enabled = false;
-            youdied.SetActive(true);
-            hud.SetActive(false);
-            Cursor.visible = true;
-            audioSource = null;
+            Die();
         }
+        CheckIfOutOfCameraView();
     }
 
 
@@ -120,7 +133,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private async void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
         {
@@ -226,9 +239,10 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ReducirAncho(5)); // Reducción extra por el misil
             }
         }
-        else if (collision.CompareTag("PassScene"))
+        if (collision.CompareTag("PassScene") && !levelPassed)
         {
             PassLevel();
+            levelPassed = true;
         }
     }
 
@@ -236,6 +250,19 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         Destroy(bullet);
+    }
+
+    private TextMeshProUGUI FindTextMeshProUGUIByTag(string tag)
+    {
+        TextMeshProUGUI[] textMeshes = FindObjectsOfType<TextMeshProUGUI>();
+        foreach (TextMeshProUGUI textMesh in textMeshes)
+        {
+            if (textMesh.CompareTag(tag))
+            {
+                return textMesh;
+            }
+        }
+        return null; // If no object with the tag is found
     }
 
     IEnumerator ReducirAncho(float extraDecrease = 0f)
@@ -262,11 +289,67 @@ public class PlayerController : MonoBehaviour
 
     private void PassLevel()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = (currentSceneIndex + 1) % SceneManager.sceneCountInBuildSettings;
-        SceneManager.LoadScene(nextSceneIndex);
+        double score = 0;
+
+        if (scoreCounter != null && double.TryParse(scoreCounter.text, out score))
+        {
+            // El valor de scoreCounter.text se pudo convertir correctamente a un double
+            // Actualiza el puntaje del jugador en la base de datos
+            databaseaccess.UpdateScore(playerData.playerName, score);
+        }
+        else
+        {
+            // El valor de scoreCounter.text no se pudo convertir a un double
+            // Muestra un mensaje de advertencia o maneja el caso de error de otra manera
+            Debug.LogWarning("No se pudo convertir el puntaje a un valor numérico.");
+        }
+
+        // Cambia de escena
+        ChangeScene();
     }
 
+    private void ChangeScene()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = (currentSceneIndex + 1) % SceneManager.sceneCountInBuildSettings;
+
+        if (nextSceneIndex <= 4)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+            // Aquí puedes agregar cualquier otra lógica o acción que desees cuando el índice de la escena sea igual o mayor que 4.
+            Debug.Log("Índice de escena igual o mayor que 4. No se carga ninguna nueva escena.");
+        }
+    }
+
+    void CheckIfOutOfCameraView()
+    {
+        Camera[] cameras = Camera.allCameras; // Obtener todas las cámaras en la escena
+
+        foreach (Camera cam in cameras)
+        {
+            if (cam.CompareTag("Level2Cam")) // Reemplaza "SpecificCameraTag" con el tag específico de tu cámara
+            {
+                if (!cam.pixelRect.Contains(cam.WorldToViewportPoint(transform.position)))
+                {
+                    // Si la posición del jugador no está dentro de la vista de la cámara
+                    Die(); // Llama a la función Die() para que el jugador muera
+                }
+            }
+        }
+    }
+
+    private void Die()
+    {
+        enabled = false;
+        youdied.SetActive(true);
+        hud.SetActive(false);
+        Cursor.visible = true;
+        audioSource = null;
+    }
     IEnumerator ColorImpactRender()
     {
         // Cambiar el color a flashColor durante 0.5 segundos

@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject highlightPlay;
     [SerializeField] GameObject highlightSettings;
     [SerializeField] GameObject highlightExit;
+    [SerializeField] GameObject highlightTop5;
 
     private int currentOptionIndex = 0;
 
@@ -68,7 +69,8 @@ public class MainMenu : MonoBehaviour
     {
         highlightPlay.SetActive(currentOptionIndex == 0);
         highlightSettings.SetActive(currentOptionIndex == 1);
-        highlightExit.SetActive(currentOptionIndex == 2);
+        highlightTop5.SetActive(currentOptionIndex == 2);
+        highlightExit.SetActive(currentOptionIndex == 3);
     }
 
     public void OnPlayButton()
@@ -94,6 +96,10 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+    public void OnTop5()
+    {
+        SceneManager.LoadScene(5);
+    }
 
     void TriggerOption()
     {
@@ -106,6 +112,9 @@ public class MainMenu : MonoBehaviour
                 OnSettingsButton();
                 break;
             case 2:
+                OnTop5();
+                break;
+            case 3:
                 OnQuitButton();
                 break;
         }

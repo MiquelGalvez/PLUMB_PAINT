@@ -30,7 +30,7 @@ TagManager:
   - Death
   - Life
   - ImageUlti
-  - BossAtack
+  - Level2Cam
   layers:
   - Default
   - TransparentFX

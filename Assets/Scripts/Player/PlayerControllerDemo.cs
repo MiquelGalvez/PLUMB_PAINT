@@ -10,7 +10,6 @@ public class PlayerControllerDemo : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
-    [SerializeField] private GameObject fadein;
     private SpriteRenderer playerRender;
     private float extraFallSpeed = 10f;
     private Camera cam;
@@ -22,18 +21,17 @@ public class PlayerControllerDemo : MonoBehaviour
 
     void Start()
     {
-        fadein.gameObject.SetActive(true);
+        Time.timeScale = 1f;
         rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         cam = Camera.main;
-        Cursor.visible = true;
         audioSource = GetComponent<AudioSource>();
         playerRender = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        float moveInput = Input.GetAxisRaw("Horizontal");
+        float moveInput = Input.GetAxis("Horizontal");
         Flip(moveInput);
         float moveSpeedCurrent = isRunning ? runSpeed : moveSpeed;
         rb.velocity = new Vector2(moveInput * moveSpeedCurrent, rb.velocity.y);

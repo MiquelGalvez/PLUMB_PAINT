@@ -28,7 +28,7 @@ public class DisparoPlayerDemo : MonoBehaviour
 
     private void Update()
     {
-        float moveInput = Input.GetAxisRaw("Horizontal");
+        float moveInput = Input.GetAxis("Horizontal");
         direccionJugador = moveInput > 0 ? Vector2.right : (moveInput < 0 ? Vector2.left : direccionJugador);
 
 

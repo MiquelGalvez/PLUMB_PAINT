@@ -70,6 +70,7 @@ public class EnemyHealthController : MonoBehaviour
 
     private void DestroyGameObject()
     {
+
         int scoreValue = 0;
         if (spawnerController != null)
         {
@@ -96,7 +97,6 @@ public class EnemyHealthController : MonoBehaviour
             currentScore += scoreValue;
             scoreCounter.text = currentScore.ToString();
         }
-
         Destroy(gameObject);
     }
 
