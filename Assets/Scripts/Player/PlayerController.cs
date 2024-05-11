@@ -74,7 +74,6 @@ public class PlayerController : MonoBehaviour
 
         if (imageWidthZero)
         {
-            Time.timeScale = 0f;
             enabled = false;
             youdied.SetActive(true);
             hud.SetActive(false);
@@ -205,6 +204,26 @@ public class PlayerController : MonoBehaviour
             if (imageToModify != null)
             {
                 StartCoroutine(ReducirAncho()); // Reducción extra por el misil
+            }
+        }
+        else if (collision.CompareTag("BossAtack"))
+        {
+            Rigidbody2D misilerb = collision.GetComponent<Rigidbody2D>();
+            if (misilerb != null)
+            {
+                misilerb.velocity = Vector2.zero;
+                misilerb.simulated = false;
+            }
+
+            Destroy(collision.gameObject);
+            
+
+            // Cambiar el color del render a rojo claro durante 0.5 segundos
+            StartCoroutine(ColorImpactRender());
+
+            if (imageToModify != null)
+            {
+                StartCoroutine(ReducirAncho(20)); // Reducción extra por el misil
             }
         }
         else if (collision.CompareTag("PassScene"))

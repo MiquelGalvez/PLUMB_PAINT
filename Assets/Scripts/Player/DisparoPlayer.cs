@@ -8,7 +8,8 @@ public class DisparoPlayer : MonoBehaviour
     [SerializeField] private Transform controladorDisparo;
     [SerializeField] private GameObject balaPrefab;
     [SerializeField] private GameObject ultimatePrefab;
-    [SerializeField] private Image ultimate;
+    private GameObject ultimate;
+    private Image ultimateImg;
     [SerializeField] private AudioClip disparoClip;
     [SerializeField] private AudioClip ultimateClip;
     private AudioSource source;
@@ -23,6 +24,8 @@ public class DisparoPlayer : MonoBehaviour
 
     private void Start()
     {
+        ultimate = GameObject.FindGameObjectWithTag("Ultimate");
+        ultimateImg = ultimate.GetComponent<Image>();
         source = GetComponent<AudioSource>();
         isFilling = false;
         isShooting = false;
@@ -72,12 +75,12 @@ public class DisparoPlayer : MonoBehaviour
             }
         }
 
-        if (ultimate.fillAmount == 1f)
+        if (ultimateImg.fillAmount == 1f)
         {
             isFilling = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && ultimate.fillAmount == 1f)
+        if (Input.GetKeyDown(KeyCode.E) && ultimateImg.fillAmount == 1f)
         {
             if (source != null && ultimateClip != null)
             {
@@ -85,7 +88,7 @@ public class DisparoPlayer : MonoBehaviour
                 Invoke("DispararUltimate", 1.5f);
             }
 
-            ultimate.fillAmount = 0f;
+            ultimateImg.fillAmount = 0f;
         }
     }
 
@@ -247,24 +250,24 @@ public class DisparoPlayer : MonoBehaviour
 
     private IEnumerator BlinkImage()
     {
-        Color originalColor = ultimate.color;
+        Color originalColor = ultimateImg.color;
         Color targetColor = Color.yellow;
         float blinkSpeed = 0.5f; // Velocidad del parpadeo (en segundos)
 
         while (true)
         {
             // Si está llenándose y el fillAmount es 1, cambia entre el color actual y amarillo
-            if (isFilling && ultimate.fillAmount == 1f)
+            if (isFilling && ultimateImg.fillAmount == 1f)
             {
-                ultimate.color = targetColor;
+                ultimateImg.color = targetColor;
                 yield return new WaitForSeconds(blinkSpeed / 2);
-                ultimate.color = originalColor;
+                ultimateImg.color = originalColor;
                 yield return new WaitForSeconds(blinkSpeed / 2);
             }
             else
             {
                 // Si no está llenándose o el fillAmount ya no es 1, vuelve al color original y espera un poco antes de verificar de nuevo
-                ultimate.color = originalColor;
+                ultimateImg.color = originalColor;
                 yield return new WaitForSeconds(0.1f);
             }
         }

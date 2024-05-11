@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.InputSystem.HID;
 
 public class TurretController : MonoBehaviour
 {
@@ -35,6 +36,23 @@ public class TurretController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player"); // Busca el jugador al iniciar
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player Shoot"))
+        {
+            float fillAmount = 0.02f;
+            fillImage.fillAmount += fillAmount;
+            Destroy(other.gameObject);
+            enemyHealthController.TakeDamage(1);
+        }
+        if (other.CompareTag("UltimateShoot"))
+        {
+            float fillAmount = 0.09f;
+            fillImage.fillAmount += fillAmount;
+            audiosource.PlayOneShot(takedamage);
+            enemyHealthController.TakeDamage(15);
+        }
+    }
     void Update()
     {
         // Calcula la dirección del jugador
@@ -125,24 +143,6 @@ public class TurretController : MonoBehaviour
             }
 
             yield return null;
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player Shoot"))
-        {
-            float fillAmount = 0.01f;
-            fillImage.fillAmount += fillAmount;
-            Destroy(other.gameObject);
-            enemyHealthController.TakeDamage(1);
-        }
-        if (other.CompareTag("UltimateShoot"))
-        {
-            float fillAmount = 0.09f;
-            fillImage.fillAmount += fillAmount;
-            audiosource.PlayOneShot(takedamage);
-            enemyHealthController.TakeDamage(15);
         }
     }
 }

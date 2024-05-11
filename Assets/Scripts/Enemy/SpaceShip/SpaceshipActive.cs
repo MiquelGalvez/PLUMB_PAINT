@@ -9,16 +9,27 @@ public class SpaceshipActive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Verificar si objectToCount no tiene ningún hijo
-        if (objectToCount.transform.childCount == 0)
+        bool allChildrenInactive = true;
+
+        // Iterar a través de todos los hijos de objectToCount
+        foreach (Transform child in objectToCount.transform)
         {
-            // Activar el GameObject deseado si no hay hijos
+            // Si algún hijo está activo, establecemos la bandera allChildrenInactive en falso y salimos del bucle
+            if (child.gameObject.activeSelf)
+            {
+                allChildrenInactive = false;
+                break;
+            }
+        }
+
+        // Activar los GameObjects basado en el estado de los hijos
+        if (allChildrenInactive)
+        {
             objectToActivate.SetActive(true);
             objectToActivate2.SetActive(true);
         }
         else
         {
-            // Desactivar el GameObject deseado si hay hijos
             objectToActivate.SetActive(false);
             objectToActivate2.SetActive(false);
         }

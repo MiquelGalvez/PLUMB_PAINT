@@ -1,82 +1,46 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.InputSystem.HID;
 
 public class Turret_Purple : MonoBehaviour
 {
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] AudioSource audiosource;
+    // Declaración de variables
+    [SerializeField] GameObject bulletPrefab;
+    public AudioSource audiosource;
     [SerializeField] Transform spawnPoint;
     [SerializeField] float minShootInterval = 1f;
     [SerializeField] float maxShootInterval = 2f;
     [SerializeField] float bulletSpeed = 5f;
-    [SerializeField] float shootDuration = 0.5f; // Duración de la animación de disparo
+    [SerializeField] float shootDuration = 0.5f;
     [SerializeField] float maxBulletDistance = 10f;
-    [SerializeField] AudioClip takedamage;
+    public AudioClip takedamage;
     [SerializeField] Image fillImage;
     private EnemyHealthController enemyHealthController;
-    private GameObject player; // Referencia al objeto del jugador
+
     private float shootTimer = 0f;
     private float currentShootInterval;
     private bool isShooting = false;
+    private Animator turretAnimator;
+    private int shotsReceived = 0;
     private SpriteRenderer turretRenderer;
+    private GameObject player;
 
     void Start()
     {
+        turretAnimator = GetComponent<Animator>();
+        turretRenderer = GetComponent<SpriteRenderer>();
         currentShootInterval = Random.Range(minShootInterval, maxShootInterval);
-        enemyHealthController = GetComponent<EnemyHealthController>();
+        enemyHealthController = GetComponent<EnemyHealthController>(); 
         audiosource = GetComponent<AudioSource>();
-        player = GameObject.FindGameObjectWithTag("Player"); // Buscar el objeto del jugador
-    }
-
-    void Update()
-    {
-        shootTimer += Time.deltaTime;
-
-        if (isShooting)
-        {
-            if (shootTimer >= shootDuration)
-            {
-                isShooting = false;
-                shootTimer = 0f;
-            }
-        }
-        else
-        {
-            if (shootTimer >= currentShootInterval - shootDuration * 0.5f) // Se activa 0.5 segundos antes del disparo
-            {
-                Shoot();
-            }
-
-            if (shootTimer >= currentShootInterval)
-            {
-                currentShootInterval = Random.Range(minShootInterval, maxShootInterval);
-                shootTimer = 0f;
-            }
-        }
-    }
-
-    void Shoot()
-    {
-        isShooting = true;
-
-        // Calcula la dirección hacia el jugador desde la posición del proyectil
-        Vector2 direction = (player.transform.position - spawnPoint.position).normalized;
-
-        GameObject projectile = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
-        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0f; // Desactiva la gravedad para que el proyectil no caiga
-        rb.velocity = direction * bulletSpeed; // Establece la velocidad en la dirección calculada
-
-        // Calcula el ángulo de rotación en Z y aplica la rotación al proyectil
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        projectile.transform.rotation = Quaternion.Euler(0f, 0f, angle + 90f); // Ajusta la rotación en Z
+        player = GameObject.FindGameObjectWithTag("Player"); // Busca el jugador al iniciar
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player Shoot"))
         {
-            float fillAmount = 0.01f;
+            float fillAmount = 0.02f;
             fillImage.fillAmount += fillAmount;
             Destroy(other.gameObject);
             enemyHealthController.TakeDamage(1);
@@ -87,6 +51,100 @@ public class Turret_Purple : MonoBehaviour
             fillImage.fillAmount += fillAmount;
             audiosource.PlayOneShot(takedamage);
             enemyHealthController.TakeDamage(15);
+        }
+    }
+    void Update()
+    {
+        // Calcula la dirección del jugador
+        Vector3 playerDirection = player.transform.position - transform.position;
+
+        // Si el jugador está a la derecha de la torreta, voltear el sprite y disparar hacia la derecha
+        if (playerDirection.x > 0)
+        {
+            turretRenderer.flipX = true;
+            spawnPoint.localPosition = new Vector3(-spawnPoint.localPosition.x, spawnPoint.localPosition.y, spawnPoint.localPosition.z);
+        }
+        else
+        {
+            turretRenderer.flipX = false;
+            spawnPoint.localPosition = new Vector3(Mathf.Abs(spawnPoint.localPosition.x), spawnPoint.localPosition.y, spawnPoint.localPosition.z);
+        }
+
+        shootTimer += Time.deltaTime;
+
+        if (isShooting)
+        {
+            if (shootTimer >= shootDuration)
+            {
+                if (turretAnimator != null)
+                {
+                    turretAnimator.SetBool("CanShoot", false);
+                }
+                isShooting = false;
+                shootTimer = 0f;
+            }
+        }
+        else
+        {
+            if (shootTimer >= currentShootInterval)
+            {
+                Shoot();
+                currentShootInterval = Random.Range(minShootInterval, maxShootInterval);
+                shootTimer = 0f;
+            }
+        }
+    }
+
+    void Shoot()
+    {
+
+        Quaternion rotation = Quaternion.Euler(180, 0, -90);
+        if (turretAnimator != null)
+        {
+            turretAnimator.SetBool("CanShoot", true);
+        }
+
+        isShooting = true;
+
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, rotation);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
+        // Disparar hacia la izquierda si el jugador está a la izquierda de la torreta
+        if (turretRenderer.flipX)
+        {
+            rb.velocity = Vector2.right * bulletSpeed;
+        }
+        else
+        {
+            rb.velocity = Vector2.left * bulletSpeed;
+        }
+
+        StartCoroutine(DestroyBulletAfterDistance(bullet));
+    }
+
+    IEnumerator DestroyBulletAfterDistance(GameObject bullet)
+    {
+        Vector3 initialPosition = bullet.transform.position;
+        float distanceTraveled = 0f;
+
+        while (true)
+        {
+            distanceTraveled = Vector3.Distance(initialPosition, bullet.transform.position);
+
+            if (distanceTraveled >= maxBulletDistance)
+            {
+                if (bullet != null)
+                {
+                    Destroy(bullet);
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            yield return null;
         }
     }
 }

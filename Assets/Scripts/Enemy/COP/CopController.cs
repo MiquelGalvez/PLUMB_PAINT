@@ -164,7 +164,7 @@ public class CopController : MonoBehaviour
     {
         if (other.CompareTag("Player Shoot"))
         {
-            float fillAmount = 0.01f;
+            float fillAmount = 0.02f;
             fillImage.fillAmount += fillAmount;
             Destroy(other.gameObject);
             enemyHealthController.TakeDamage(1);

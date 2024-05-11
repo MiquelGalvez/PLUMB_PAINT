@@ -20,11 +20,17 @@ TagManager:
   - CopSpawn1
   - CopSpawn2
   - PassScene
-  - Settings
   - ScoreCounter
   - Spaceship
   - ToGo
   - NamePlayer
+  - Settings
+  - UI
+  - Fade
+  - Death
+  - Life
+  - ImageUlti
+  - BossAtack
   layers:
   - Default
   - TransparentFX

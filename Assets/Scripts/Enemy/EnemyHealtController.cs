@@ -19,7 +19,7 @@ public class EnemyHealthController : MonoBehaviour
     // Reference to the score counter
     private TextMeshProUGUI scoreCounter;
 
-    private const float flashDuration = 0.5f;
+    private const float flashDuration = 0.2f;
 
     private void Start()
     {
@@ -57,8 +57,10 @@ public class EnemyHealthController : MonoBehaviour
         {
             Animator animator = GetComponent<Animator>();
             if (animator != null)
+            {
                 animator.SetTrigger("Explode");
-            StartCoroutine(DelayedDestroy());
+                Invoke("DestroyGameObject", 0.1f);
+            }
         }
         else
         {
@@ -66,13 +68,6 @@ public class EnemyHealthController : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayedDestroy()
-    {
-        yield return new WaitForSeconds(0.5f);
-        DestroyGameObject();
-    }
-    //COMO POLLAS DE 2 EN 2 
-    //ESTE CODIGO ES HOMOSEXUAL :D
     private void DestroyGameObject()
     {
         int scoreValue = 0;
@@ -82,7 +77,7 @@ public class EnemyHealthController : MonoBehaviour
         }
         if (gameObject.CompareTag("Turret"))
         {
-            scoreValue = 200;
+            scoreValue = 100;
         }
         if (gameObject.CompareTag("CopSpawn1"))
         {
