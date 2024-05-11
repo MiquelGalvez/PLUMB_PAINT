@@ -21,6 +21,6 @@ public class DeathMenu : MonoBehaviour
 
     public void OnQuitButton()
     {
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
 }

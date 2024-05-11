@@ -24,16 +24,16 @@ public class Turret_Purple : MonoBehaviour
     private Animator turretAnimator;
     private int shotsReceived = 0;
     private SpriteRenderer turretRenderer;
-    private GameObject player;
+    [SerializeField] private GameObject player;
 
     void Start()
     {
         turretAnimator = GetComponent<Animator>();
         turretRenderer = GetComponent<SpriteRenderer>();
         currentShootInterval = Random.Range(minShootInterval, maxShootInterval);
-        enemyHealthController = GetComponent<EnemyHealthController>(); 
+        enemyHealthController = GetComponent<EnemyHealthController>();
         audiosource = GetComponent<AudioSource>();
-        player = GameObject.FindGameObjectWithTag("Player"); // Busca el jugador al iniciar
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -55,6 +55,7 @@ public class Turret_Purple : MonoBehaviour
     }
     void Update()
     {
+        player = GameObject.FindGameObjectWithTag("Player"); // Busca el jugador al iniciar
         // Calcula la dirección del jugador
         Vector3 playerDirection = player.transform.position - transform.position;
 
@@ -97,8 +98,6 @@ public class Turret_Purple : MonoBehaviour
 
     void Shoot()
     {
-
-        Quaternion rotation = Quaternion.Euler(180, 0, -90);
         if (turretAnimator != null)
         {
             turretAnimator.SetBool("CanShoot", true);
@@ -106,7 +105,7 @@ public class Turret_Purple : MonoBehaviour
 
         isShooting = true;
 
-        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, rotation);
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
         // Disparar hacia la izquierda si el jugador está a la izquierda de la torreta

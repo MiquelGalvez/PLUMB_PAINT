@@ -223,7 +223,7 @@ public class PlayerController : MonoBehaviour
 
             if (imageToModify != null)
             {
-                StartCoroutine(ReducirAncho(20)); // Reducción extra por el misil
+                StartCoroutine(ReducirAncho(5)); // Reducción extra por el misil
             }
         }
         else if (collision.CompareTag("PassScene"))
@@ -262,7 +262,9 @@ public class PlayerController : MonoBehaviour
 
     private void PassLevel()
     {
-        SceneManager.LoadScene(3);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = (currentSceneIndex + 1) % SceneManager.sceneCountInBuildSettings;
+        SceneManager.LoadScene(nextSceneIndex);
     }
 
     IEnumerator ColorImpactRender()

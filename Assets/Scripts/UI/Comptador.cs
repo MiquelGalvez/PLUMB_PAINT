@@ -11,7 +11,7 @@ public class Comptador : MonoBehaviour
     [SerializeField] GameObject PassScene; // Referencia al objeto de la imagen que parpadeará cuando el tiempo llegue a cero
 
     private GameObject spawner;
-    private float tiempoRestante = 120f; // Tiempo inicial en segundos (dos minutos)
+    private float tiempoRestante = 10f; // Tiempo inicial en segundos (dos minutos)
     private bool tiempoTerminado = false; // Flag para verificar si el tiempo ha terminado
 
     private void Start()
