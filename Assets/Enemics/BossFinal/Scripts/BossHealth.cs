@@ -10,8 +10,11 @@ public class BossHealth : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     [SerializeField] Animator animator;
     [SerializeField] private AudioSource deadAudioSource;
+    [SerializeField] private GameObject pasarescena;
+    [SerializeField] private GameObject opendoor;
+    private Animator dooranimator;
 
-    private int currentHealth;
+    public int currentHealth;
 
     public static event UnityAction OnDeathAnimationStart;
     private SpriteRenderer enemyRenderer;
@@ -34,6 +37,7 @@ public class BossHealth : MonoBehaviour
         turretController = GetComponent<TurretController>();
         spawnerController = FindAnyObjectByType<SpawnerController>();
         currentHealth = maxHealth;
+        dooranimator = opendoor.GetComponent<Animator>();
         enemyRenderer = GetComponent<SpriteRenderer>();
         originalColor = enemyRenderer.color;
 
@@ -61,6 +65,7 @@ public class BossHealth : MonoBehaviour
     private void Die()
     {
         int scoreValue = 0;
+
         if (animator != null)
         {
             animator.SetBool("Dead", true);
@@ -75,7 +80,9 @@ public class BossHealth : MonoBehaviour
                 deadAudioSource.Play();
                 deathSoundCounter++; // Incrementar el contador
             }
+            
         }
+        Invoke("EscenaFinal", 7f);
 
 
     }
@@ -91,6 +98,14 @@ public class BossHealth : MonoBehaviour
     private T FindAnyObjectByType<T>() where T : Component
     {
         return FindObjectOfType<T>();
+    }
+
+    private void EscenaFinal()
+    {
+        dooranimator.SetTrigger("CanOpen");
+        pasarescena.SetActive(true);
+        this.enabled = false;
+
     }
 
     // Helper method to find TextMeshProUGUI by tag

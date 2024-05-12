@@ -5,7 +5,7 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using System;
 
-public class DatabaseAccess : MonoBehaviour
+public class DatabaseAccess
 {
     MongoClient client = new MongoClient("mongodb+srv://mgalvezdam:miquel123@cluster0.rj5yhrh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
     IMongoDatabase database;
@@ -92,6 +92,28 @@ public class DatabaseAccess : MonoBehaviour
         var topPlayers = collection.Find(new BsonDocument()).Sort(sort).Limit(limit).ToList();
 
         return topPlayers;
+    }
+
+    public double GetPlayerScore(string playerName)
+    {
+        if (collection == null)
+        {
+            // Inicializa la colección si aún no está inicializada
+            database = client.GetDatabase("UnityDB");
+            collection = database.GetCollection<BsonDocument>("Players");
+        }
+        var filter = Builders<BsonDocument>.Filter.Eq("player", playerName);
+        var playerDocument = collection.Find(filter).FirstOrDefault();
+
+        if (playerDocument != null)
+        {
+            return playerDocument["score"].AsDouble;
+        }
+        else
+        {
+            Debug.LogError("Player not found in the database: " + playerName);
+            return 0.0; // or throw an exception indicating player not found
+        }
     }
 
 }

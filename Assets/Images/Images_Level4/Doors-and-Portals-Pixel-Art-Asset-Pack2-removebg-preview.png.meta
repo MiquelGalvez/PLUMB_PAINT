@@ -1,0 +1,1143 @@
+fileFormatVersion: 2
+guid: 6ab650eddaf3da443be4dd8c3dcc804b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 2
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 327
+        width: 40
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6acf7bb7f6b6d1b44903205f8df40b79
+      internalID: 282146333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b9c225f585b8c84aacde6bf840e4c60
+      internalID: -1613752182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa09f21b25423fb41b5c845b24e4a09c
+      internalID: -1527368034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc28c3fa1fda9ad4ab4d1fa1cc888258
+      internalID: -919600357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c0694aeb253d904ba738b8d10584cd3
+      internalID: 981699651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c77855c637130a4dbdfe24552c75d7f
+      internalID: -383620888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5316c9b78533147489c144a037adb508
+      internalID: -2106299622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 912fefe4e35d8ba4689320b0a667d44f
+      internalID: -25622641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bd603581c5e23543bb218f76ab13306
+      internalID: -1021114065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79dff0ce36f1053449d70ab2421799ef
+      internalID: 749009448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_10
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb44d4d2651e21640bf4295cb3b6f006
+      internalID: 2012777434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 327
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 235408fda2bad934296d402453ca0673
+      internalID: -1341080769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76b65f9d2733380448fcccc5952445e1
+      internalID: -51340124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_13
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2b3417c080d8fd47906e68c40de4c04
+      internalID: -1929849267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_14
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5477ed8a7a6c4424ea65be3eb916af83
+      internalID: 1382139227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_15
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7163963be0d3524790789eb8065d9d8
+      internalID: 768082036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_16
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7486ee75566bf2b48a3656af2a2fe535
+      internalID: -2131972652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_17
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35df55fb83162994cad89ed651596048
+      internalID: -1672179402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_18
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9fefb5b74363cb429ed32c865bcaca8
+      internalID: -1639149048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_19
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6042eda9345215e4aa9abcd958bc0578
+      internalID: 734218146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_20
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b16107e5e99c014468ca947be2f77842
+      internalID: -1438626463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_21
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 226
+        width: 40
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab13f2515a191084f88fbca37fb1eac3
+      internalID: 1960846691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_22
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aa3b751783fd4b43a6c7133e10d047a
+      internalID: 457457050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_23
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 226
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05ead5b2f7603fa4db397a0540d5dbb3
+      internalID: -1936056062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_24
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 125
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a841b5e69fa33a6439021ad2a7fbb5bd
+      internalID: -699583290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_25
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48a6984cce004f442b7949b964f777c6
+      internalID: 693113092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_26
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df4040dc21de83f4a80186829531678a
+      internalID: 136162776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_27
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 126
+        width: 40
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed269692f7908394aa9526884af67587
+      internalID: -286590809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_28
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34d6e9736dea5ee41a7b2123fe20c803
+      internalID: 1949269571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_29
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dee6a6411e570994bae964aa047e905e
+      internalID: 243631175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_30
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8805c3058e1a1249a30971022386c43
+      internalID: -1277319335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_31
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ea0c9522c708874d9e250ad1d2fe81e
+      internalID: -1783844625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_32
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c9f3b308bd09274fa958ec821d62c20
+      internalID: 1169605594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_33
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b3508a50ba049045ba5df2fa38cdcdb
+      internalID: -2090400541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_34
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 659f8035f0b2ef94690c2bc2b0680b2f
+      internalID: -1519889148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_35
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 126
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7d872380f926ef4089cfe9ab4eaeeab
+      internalID: 1221815770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_36
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 25
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdefb7df0d9608c449ab9bdd92f7e6d1
+      internalID: 1800137858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_37
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 26
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2da73b7cace3f8c4988db5e03f91b295
+      internalID: 1765402150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_38
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 26
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83ebff7feb942bc4e9575655ef4c33aa
+      internalID: 2107098638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_39
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 26
+        width: 82
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99efe00d7bec65d429c60b0139e04d87
+      internalID: -231951253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_40
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 25
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 920405c60d18e4f46b31cdb98387dc88
+      internalID: -216592909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_41
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 26
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c86e71989b42a7842af79cb4fc776539
+      internalID: -1897186520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_42
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 26
+        width: 126
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6194dedc4f0eb254681e98daabedba02
+      internalID: 759923118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_43
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 26
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 465e99538930d7046b98c4368326ae0e
+      internalID: 1298606746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_44
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 26
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4bee59a3d32d6d4e8ecc9fabc472bc9
+      internalID: -137571891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_0: 282146333
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_1: -1613752182
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_10: 2012777434
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_11: -1341080769
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_12: -51340124
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_13: -1929849267
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_14: 1382139227
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_15: 768082036
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_16: -2131972652
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_17: -1672179402
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_18: -1639149048
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_19: 734218146
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_2: -1527368034
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_20: -1438626463
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_21: 1960846691
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_22: 457457050
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_23: -1936056062
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_24: -699583290
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_25: 693113092
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_26: 136162776
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_27: -286590809
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_28: 1949269571
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_29: 243631175
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_3: -919600357
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_30: -1277319335
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_31: -1783844625
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_32: 1169605594
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_33: -2090400541
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_34: -1519889148
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_35: 1221815770
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_36: 1800137858
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_37: 1765402150
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_38: 2107098638
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_39: -231951253
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_4: 981699651
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_40: -216592909
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_41: -1897186520
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_42: 759923118
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_43: 1298606746
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_44: -137571891
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_5: -383620888
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_6: -2106299622
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_7: -25622641
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_8: -1021114065
+      Doors-and-Portals-Pixel-Art-Asset-Pack2-removebg-preview_9: 749009448
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

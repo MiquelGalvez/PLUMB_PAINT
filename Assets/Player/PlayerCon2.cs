@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using System;
 
 public class PlayerCon2 : MonoBehaviour
 {
@@ -26,7 +28,6 @@ public class PlayerCon2 : MonoBehaviour
     [SerializeField] private float widthDecreaseAmount;
     [SerializeField] private float extraWidthDecreaseAmount; // Extra reducción para el misil
     private bool imageWidthZero = false;
-
 
     void Start()
     {
@@ -80,6 +81,7 @@ public class PlayerCon2 : MonoBehaviour
             Cursor.visible = true;
             audioSource = null;
         }
+        
     }
 
 
@@ -206,6 +208,10 @@ public class PlayerCon2 : MonoBehaviour
                 StartCoroutine(ReducirAncho()); // Reducción extra por el misil
             }
         }
+        else if (collision.CompareTag("EndGame"))
+        {
+            SceneManager.LoadScene(6);
+        }
         else if (collision.CompareTag("BossAtack"))
         {
             Rigidbody2D misilerb = collision.GetComponent<Rigidbody2D>();
@@ -243,11 +249,6 @@ public class PlayerCon2 : MonoBehaviour
                 StartCoroutine(ReducirAncho(10)); // Reducción extra por el ataque del jefe cuerpo a cuerpo
             }
         }
-
-        else if (collision.CompareTag("PassScene"))
-        {
-            PassLevel();
-        }
     }
 
     IEnumerator DestruirBala(GameObject bullet)
@@ -276,13 +277,6 @@ public class PlayerCon2 : MonoBehaviour
         {
             imageWidthZero = true;
         }
-    }
-
-    private void PassLevel()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = (currentSceneIndex + 1) % SceneManager.sceneCountInBuildSettings;
-        SceneManager.LoadScene(nextSceneIndex);
     }
 
     IEnumerator ColorImpactRender()

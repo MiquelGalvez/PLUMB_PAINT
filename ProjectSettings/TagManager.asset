@@ -31,6 +31,9 @@ TagManager:
   - Life
   - ImageUlti
   - Level2Cam
+  - BossAtack
+  - CacBossAtack
+  - EndGame
   layers:
   - Default
   - TransparentFX
