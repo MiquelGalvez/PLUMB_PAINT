@@ -8,7 +8,7 @@ public class BossHealth : MonoBehaviour
 {
     [SerializeField] private GameObject scorePopUp;
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] Animator animator;
+    [SerializeField] private Animator animator;
     [SerializeField] private AudioSource deadAudioSource;
     [SerializeField] private GameObject pasarescena;
     [SerializeField] private GameObject opendoor;
@@ -25,11 +25,11 @@ public class BossHealth : MonoBehaviour
     private Color damageColor = new Color(1f, 0.5f, 0.5f, 1f); // Light Red
     private int deathSoundCounter = 0;
 
-
     // Reference to the score counter
     private TextMeshProUGUI scoreCounter;
 
     private const float flashDuration = 0.2f;
+    private const float fadeDuration = 3f; // Duración de la atenuación gradual
 
     private void Start()
     {
@@ -40,7 +40,6 @@ public class BossHealth : MonoBehaviour
         dooranimator = opendoor.GetComponent<Animator>();
         enemyRenderer = GetComponent<SpriteRenderer>();
         originalColor = enemyRenderer.color;
-
         // Find the score counter by tag
         scoreCounter = FindTextMeshProUGUIByTag("ScoreCounter");
         if (scoreCounter == null)
@@ -69,7 +68,7 @@ public class BossHealth : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("Dead", true);
-            animator.SetBool("Idlemov",false);
+            animator.SetBool("Idlemov", false);
             animator.SetBool("Active1", false);
             animator.SetBool("Active2", false);
             animator.SetBool("Active3", false);
@@ -80,11 +79,12 @@ public class BossHealth : MonoBehaviour
                 deadAudioSource.Play();
                 deathSoundCounter++; // Incrementar el contador
             }
-            
+
+            // Inicia la rutina para atenuar el volumen
+            StartCoroutine(FadeOutAudio());
         }
+
         Invoke("EscenaFinal", 7f);
-
-
     }
 
     private IEnumerator FlashColor(Color flashColor)
@@ -94,10 +94,23 @@ public class BossHealth : MonoBehaviour
         enemyRenderer.color = originalColor;
     }
 
-    // Helper method to find any object by type
-    private T FindAnyObjectByType<T>() where T : Component
+    private IEnumerator FadeOutAudio()
     {
-        return FindObjectOfType<T>();
+        float startVolume = deadAudioSource.volume; // Volumen inicial
+        float currentTime = 0f;
+
+        while (currentTime < fadeDuration)
+        {
+            currentTime += Time.deltaTime;
+            // Calcula la fracción del tiempo transcurrido
+            float fraction = currentTime / fadeDuration;
+            // Calcula el volumen actual basado en la fracción
+            deadAudioSource.volume = Mathf.Lerp(startVolume, 0f, fraction);
+            yield return null; // Espera hasta el siguiente frame
+        }
+
+        // Asegúrate de que el volumen esté en silencio al final
+        deadAudioSource.volume = 0f;
     }
 
     private void EscenaFinal()
@@ -105,7 +118,12 @@ public class BossHealth : MonoBehaviour
         dooranimator.SetTrigger("CanOpen");
         pasarescena.SetActive(true);
         this.enabled = false;
+    }
 
+    // Helper method to find any object by type
+    private T FindAnyObjectByType<T>() where T : Component
+    {
+        return FindObjectOfType<T>();
     }
 
     // Helper method to find TextMeshProUGUI by tag
