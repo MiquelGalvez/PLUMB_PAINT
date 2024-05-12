@@ -79,9 +79,6 @@ public class BossHealth : MonoBehaviour
                 deadAudioSource.Play();
                 deathSoundCounter++; // Incrementar el contador
             }
-
-            // Inicia la rutina para atenuar el volumen
-            StartCoroutine(FadeOutAudio());
         }
 
         Invoke("EscenaFinal", 7f);
@@ -92,25 +89,6 @@ public class BossHealth : MonoBehaviour
         enemyRenderer.color = flashColor;
         yield return new WaitForSeconds(flashDuration);
         enemyRenderer.color = originalColor;
-    }
-
-    private IEnumerator FadeOutAudio()
-    {
-        float startVolume = deadAudioSource.volume; // Volumen inicial
-        float currentTime = 0f;
-
-        while (currentTime < fadeDuration)
-        {
-            currentTime += Time.deltaTime;
-            // Calcula la fracción del tiempo transcurrido
-            float fraction = currentTime / fadeDuration;
-            // Calcula el volumen actual basado en la fracción
-            deadAudioSource.volume = Mathf.Lerp(startVolume, 0f, fraction);
-            yield return null; // Espera hasta el siguiente frame
-        }
-
-        // Asegúrate de que el volumen esté en silencio al final
-        deadAudioSource.volume = 0f;
     }
 
     private void EscenaFinal()

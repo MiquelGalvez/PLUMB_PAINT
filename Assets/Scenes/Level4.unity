@@ -632,6 +632,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2338584541850756731, guid: 89fc3a5843025e8469ea8f817d5688b9, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1172411041}
+    - target: {fileID: 2338584541850756731, guid: 89fc3a5843025e8469ea8f817d5688b9, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2338584541850756731, guid: 89fc3a5843025e8469ea8f817d5688b9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2433178802893775348, guid: 89fc3a5843025e8469ea8f817d5688b9, type: 3}
       propertyPath: m_Name
       value: SetingsCanvasInGame
@@ -799,12 +811,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scorePopUp: {fileID: 1731927218}
-  maxHealth: 10
+  maxHealth: 70
   animator: {fileID: 722348049}
   deadAudioSource: {fileID: 1953782448}
   pasarescena: {fileID: 48688851}
   opendoor: {fileID: 296164661}
-  currentHealth: 3
+  currentHealth: 70
 --- !u!95 &722348049 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9166055535436056293, guid: 22adcc3dc24435248a64007aaafff9a9, type: 3}
@@ -897,6 +909,14 @@ PrefabInstance:
     - target: {fileID: 3089520430944228309, guid: 6548c7f34a266ce4880534faf87d14f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6808721858522248431, guid: 6548c7f34a266ce4880534faf87d14f8, type: 3}
+      propertyPath: fadeDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6808721858522248431, guid: 6548c7f34a266ce4880534faf87d14f8, type: 3}
+      propertyPath: alternateFade
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8027497863858735015, guid: 6548c7f34a266ce4880534faf87d14f8, type: 3}
       propertyPath: m_Name
@@ -1188,7 +1208,7 @@ PrefabInstance:
     - target: {fileID: 8085259206886154468, guid: 22adcc3dc24435248a64007aaafff9a9, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 7757554}
+      objectReference: {fileID: 1172411043}
     - target: {fileID: 8085259206886154468, guid: 22adcc3dc24435248a64007aaafff9a9, type: 3}
       propertyPath: damagedSprite
       value: 
