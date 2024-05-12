@@ -801,7 +801,7 @@ MonoBehaviour:
   scorePopUp: {fileID: 1731927218}
   maxHealth: 10
   animator: {fileID: 722348049}
-  deadAudioSource: {fileID: 1172411043}
+  deadAudioSource: {fileID: 1953782448}
   pasarescena: {fileID: 48688851}
   opendoor: {fileID: 296164661}
   currentHealth: 3
@@ -1193,6 +1193,10 @@ PrefabInstance:
       propertyPath: damagedSprite
       value: 
       objectReference: {fileID: -2989106971526386017, guid: e8e187db56f25e347ad6f3ab3b3b1fc4, type: 3}
+    - target: {fileID: 8085259206886154468, guid: 22adcc3dc24435248a64007aaafff9a9, type: 3}
+      propertyPath: deadAudioSource
+      value: 
+      objectReference: {fileID: 1953782448}
     - target: {fileID: 8085259206886154468, guid: 22adcc3dc24435248a64007aaafff9a9, type: 3}
       propertyPath: spriteRenderer1
       value: 
@@ -1877,7 +1881,7 @@ AudioSource:
   m_GameObject: {fileID: 1953782447}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 68a30c531652c3d44a2656765ea6a67b, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6145a110ec5614642812d542aba30d66, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

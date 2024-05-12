@@ -62,6 +62,7 @@ public class SelectName : MonoBehaviour
             {
                 Debug.LogWarning("Name cannot contain special characters!");
                 errorname.SetActive(true);
+
                 return; // Exit the method without saving
             }
 
