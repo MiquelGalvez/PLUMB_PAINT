@@ -24,6 +24,6 @@ public class PlayerInfoDisplay : MonoBehaviour
         double playerScore = databaseAccess.GetPlayerScore(playerData.playerName);
 
         // Update the text fields with the retrieved information
-        playerNameText.text = "Player:  " + playerData.playerName + "   " + playerScore.ToString();
+        playerNameText.text = "Player:  " + playerData.playerName + "   " + playerScore.ToString() + "P";
     }
 }
