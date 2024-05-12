@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     [SerializeField] private Image imageToModify;
     [SerializeField] private float widthDecreaseAmount;
-    [SerializeField] private float extraWidthDecreaseAmount; // Extra reducción para el misil
+    [SerializeField] private float extraWidthDecreaseAmount; // Extra reduction for the missile
     private bool imageWidthZero = false;
     [SerializeField] private TextMeshProUGUI scoreCounter;
     private DatabaseAccess databaseaccess;
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         cam = Camera.main;
         Cursor.visible = false;
-        // Guardar en GameData
+        // Save in GameData
         playerData = GameData.playerData;
         audioSource = GetComponent<AudioSource>();
         playerRender = GetComponent<SpriteRenderer>();
@@ -137,15 +137,15 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
-            // Obtener el animator del objeto que colisiona con el jugador
+            // Get the animator from the object colliding with the player
             Animator turretAnimator = collision.GetComponent<Animator>();
 
             if (turretAnimator != null)
             {
-                // Ejecutar la animación de explotar en el Animator de la torreta
+                // Execute the explode animation in the turret's Animator
                 turretAnimator.SetTrigger("Explode");
             }
-            // Desactivar el Rigidbody de la bala para que se quede quieta
+            // Disable the Rigidbody of the bullet to make it stay still
             Rigidbody2D bulletRb = collision.GetComponent<Rigidbody2D>();
             if (bulletRb != null)
             {
@@ -153,16 +153,16 @@ public class PlayerController : MonoBehaviour
                 bulletRb.simulated = false;
             }
 
-            // Llamar a la corrutina para destruir la bala después de medio segundo
-            StartCoroutine(DestruirBala(collision.gameObject));
+            // Call the coroutine to destroy the bullet after half a second
+            StartCoroutine(DestroyBullet(collision.gameObject));
 
-            // Cambiar el color del render a rojo claro durante 0.5 segundos
+            // Change the render color to light red for 0.5 seconds
             StartCoroutine(ColorImpactRender());
 
-            // Reducir el ancho de la imagen
+            // Reduce the width of the image
             if (imageToModify != null)
             {
-                StartCoroutine(ReducirAncho());
+                StartCoroutine(DecreaseWidth());
             }
         }
         else if (collision.CompareTag("Misile"))
@@ -181,15 +181,15 @@ public class PlayerController : MonoBehaviour
                 misilerb.simulated = false;
             }
 
-            StartCoroutine(DestruirBala(collision.gameObject));
+            StartCoroutine(DestroyBullet(collision.gameObject));
 
 
-            // Cambiar el color del render a rojo claro durante 0.5 segundos
+            // Change the render color to light red for 0.5 seconds
             StartCoroutine(ColorImpactRender());
 
             if (imageToModify != null)
             {
-                StartCoroutine(ReducirAncho(extraWidthDecreaseAmount)); // Reducción extra por el misil
+                StartCoroutine(DecreaseWidth(extraWidthDecreaseAmount)); // Extra reduction for the missile
             }
         }
         else if (collision.CompareTag("CopBullet"))
@@ -208,15 +208,15 @@ public class PlayerController : MonoBehaviour
                 misilerb.simulated = false;
             }
 
-            StartCoroutine(DestruirBala(collision.gameObject));
+            StartCoroutine(DestroyBullet(collision.gameObject));
 
 
-            // Cambiar el color del render a rojo claro durante 0.5 segundos
+            // Change the render color to light red for 0.5 seconds
             StartCoroutine(ColorImpactRender());
 
             if (imageToModify != null)
             {
-                StartCoroutine(ReducirAncho()); // Reducción extra por el misil
+                StartCoroutine(DecreaseWidth()); // Extra reduction for the missile
             }
         }
         else if (collision.CompareTag("BossAtack"))
@@ -229,14 +229,14 @@ public class PlayerController : MonoBehaviour
             }
 
             Destroy(collision.gameObject);
-            
 
-            // Cambiar el color del render a rojo claro durante 0.5 segundos
+
+            // Change the render color to light red for 0.5 seconds
             StartCoroutine(ColorImpactRender());
 
             if (imageToModify != null)
             {
-                StartCoroutine(ReducirAncho(5)); // Reducción extra por el misil
+                StartCoroutine(DecreaseWidth(5)); // Extra reduction for the missile
             }
         }
         if (collision.CompareTag("PassScene") && !levelPassed)
@@ -246,7 +246,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator DestruirBala(GameObject bullet)
+    IEnumerator DestroyBullet(GameObject bullet)
     {
         yield return new WaitForSeconds(0.5f);
         Destroy(bullet);
@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
         return null; // If no object with the tag is found
     }
 
-    IEnumerator ReducirAncho(float extraDecrease = 0f)
+    IEnumerator DecreaseWidth(float extraDecrease = 0f)
     {
         float newFillAmount = imageToModify.fillAmount - (widthDecreaseAmount + extraDecrease) / imageToModify.rectTransform.sizeDelta.x;
         float elapsedTime = 0;
@@ -293,18 +293,18 @@ public class PlayerController : MonoBehaviour
 
         if (scoreCounter != null && double.TryParse(scoreCounter.text, out score))
         {
-            // El valor de scoreCounter.text se pudo convertir correctamente a un double
-            // Actualiza el puntaje del jugador en la base de datos
+            // The value of scoreCounter.text was successfully converted to a double
+            // Update the player's score in the database
             databaseaccess.UpdateScore(playerData.playerName, score);
         }
         else
         {
-            // El valor de scoreCounter.text no se pudo convertir a un double
-            // Muestra un mensaje de advertencia o maneja el caso de error de otra manera
-            Debug.LogWarning("No se pudo convertir el puntaje a un valor numérico.");
+            // The value of scoreCounter.text could not be converted to a double
+            // Show a warning message or handle the error case in another way
+            Debug.LogWarning("Score could not be converted to a numerical value.");
         }
 
-        // Cambia de escena
+        // Change scene
         ChangeScene();
     }
 
@@ -320,23 +320,23 @@ public class PlayerController : MonoBehaviour
         else
         {
             SceneManager.LoadScene(0);
-            // Aquí puedes agregar cualquier otra lógica o acción que desees cuando el índice de la escena sea igual o mayor que 4.
-            Debug.Log("Índice de escena igual o mayor que 4. No se carga ninguna nueva escena.");
+            // Here you can add any other logic or action you want when the scene index is equal to or greater than 4.
+            Debug.Log("Scene index equal to or greater than 4. No new scene is loaded.");
         }
     }
 
     void CheckIfOutOfCameraView()
     {
-        Camera[] cameras = Camera.allCameras; // Obtener todas las cámaras en la escena
+        Camera[] cameras = Camera.allCameras; // Get all cameras in the scene
 
         foreach (Camera cam in cameras)
         {
-            if (cam.CompareTag("Level2Cam")) // Reemplaza "SpecificCameraTag" con el tag específico de tu cámara
+            if (cam.CompareTag("Level2Cam")) // Replace "SpecificCameraTag" with the specific tag of your camera
             {
                 if (!cam.pixelRect.Contains(cam.WorldToViewportPoint(transform.position)))
                 {
-                    // Si la posición del jugador no está dentro de la vista de la cámara
-                    Die(); // Llama a la función Die() para que el jugador muera
+                    // If the player's position is not within the camera's view
+                    Die(); // Call the Die() function to make the player die
                 }
             }
         }
@@ -352,12 +352,12 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator ColorImpactRender()
     {
-        // Cambiar el color a flashColor durante 0.5 segundos
+        // Change color to flashColor for 0.5 seconds
         playerRender.color = damageColor;
 
         yield return new WaitForSeconds(0.5f);
 
-        // Devolver el color original después de 0.5 segundos
+        // Return to original color after 0.5 seconds
         playerRender.color = originalColor;
     }
 }

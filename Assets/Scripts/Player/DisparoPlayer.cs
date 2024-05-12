@@ -1,54 +1,51 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class DisparoPlayer : MonoBehaviour
 {
-    [SerializeField] private Transform controladorDisparo;
-    [SerializeField] private GameObject balaPrefab;
-    [SerializeField] private GameObject ultimatePrefab;
-    private GameObject ultimate;
-    private Image ultimateImg;
-    [SerializeField] private AudioClip disparoClip;
-    [SerializeField] private AudioClip ultimateClip;
-    private AudioSource source;
+    [SerializeField] private Transform controladorDisparo; // Reference to the shooting controller
+    [SerializeField] private GameObject balaPrefab; // Bullet prefab
+    [SerializeField] private GameObject ultimatePrefab; // Ultimate ability prefab
+    private GameObject ultimate; // Reference to the ultimate ability object
+    private Image ultimateImg; // Image component for the ultimate ability UI
+    [SerializeField] private AudioClip disparoClip; // Sound clip for regular shooting
+    [SerializeField] private AudioClip ultimateClip; // Sound clip for ultimate ability
+    private AudioSource source; // Audio source component
 
-    public Vector2 direccionJugador = Vector2.right;
-    private bool isFilling;
-    private bool isShooting; // Variable para controlar si se está disparando continuamente
-    private float cooldown = 0.5f; // Cooldown entre cada bala
-    private float lastShotTime; // Tiempo del último disparo
+    public Vector2 direccionJugador = Vector2.right; // Player shooting direction
+    private bool isFilling; // Flag to track if ultimate ability UI is filling up
+    private bool isShooting; // Flag to control continuous shooting
+    private float cooldown = 0.5f; // Cooldown between each bullet shot
+    private float lastShotTime; // Time of the last shot
 
-    private Vector2 posicionInicial; // Guarda la posición inicial del jugador al disparar la ultimate
+    private Vector2 posicionInicial; // Initial player position when shooting the ultimate ability
 
     private void Start()
     {
+        // Find and initialize ultimate ability UI elements
         ultimate = GameObject.FindGameObjectWithTag("Ultimate");
         ultimateImg = ultimate.GetComponent<Image>();
-        source = GetComponent<AudioSource>();
+        source = GetComponent<AudioSource>(); // Get the AudioSource component
         isFilling = false;
         isShooting = false;
-        lastShotTime = -cooldown; // Inicializa el último tiempo de disparo para que pueda disparar de inmediato
-        // Comienza la corutina para hacer parpadear la imagen
+        lastShotTime = -cooldown; // Initialize the last shot time to allow immediate shooting
+        // Start the coroutine to make the ultimate ability UI blink
         StartCoroutine(BlinkImage());
     }
 
     private void Update()
     {
-        float moveInput = Input.GetAxisRaw("Horizontal");
+        float moveInput = Input.GetAxisRaw("Horizontal"); // Get horizontal movement input
         direccionJugador = moveInput > 0 ? Vector2.right : (moveInput < 0 ? Vector2.left : direccionJugador);
 
-
-        // Verifica si el jugador está mirando hacia la izquierda antes de permitir el disparo hacia esa dirección
+        // Prevent shooting left if not facing left
         if ((Input.GetKey(KeyCode.LeftArrow) && direccionJugador.x > 0) || (Input.GetKey(KeyCode.RightArrow) && direccionJugador.x < 0))
         {
-            // El jugador no puede disparar hacia la izquierda si no está mirando en esa dirección
             return;
         }
 
-
-        // Si la tecla de disparo está siendo mantenida y ha pasado el cooldown
+        // Check if shoot key is held down and cooldown has passed
         if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) &&
             Time.time >= lastShotTime + cooldown)
@@ -60,73 +57,74 @@ public class DisparoPlayer : MonoBehaviour
             isShooting = false;
         }
 
-        // Si se está disparando continuamente
+        // If continuously shooting
         if (isShooting)
         {
-            // Si el cooldown ha pasado, dispara y actualiza el tiempo del último disparo
+            // If cooldown has passed, shoot and update last shot time
             if (Time.time >= lastShotTime + cooldown)
             {
                 lastShotTime = Time.time;
                 if (source != null && disparoClip != null)
                 {
-                    source.PlayOneShot(disparoClip);
-                    Disparar();
+                    source.PlayOneShot(disparoClip); // Play the shooting sound
+                    Disparar(); // Shoot regular bullet
                 }
             }
         }
 
+        // Check if ultimate ability UI is fully filled
         if (ultimateImg.fillAmount == 1f)
         {
             isFilling = true;
         }
 
+        // If ultimate ability key is pressed and UI is fully filled
         if (Input.GetKeyDown(KeyCode.E) && ultimateImg.fillAmount == 1f)
         {
             if (source != null && ultimateClip != null)
             {
-                source.PlayOneShot(ultimateClip);
-                Invoke("DispararUltimate", 1.5f);
+                source.PlayOneShot(ultimateClip); // Play the ultimate ability sound
+                Invoke("DispararUltimate", 1.5f); // Shoot the ultimate ability after a delay
             }
 
-            ultimateImg.fillAmount = 0f;
+            ultimateImg.fillAmount = 0f; // Reset the ultimate ability UI fill amount
         }
     }
 
+    // Method to shoot regular bullets
     private void Disparar()
     {
-        Quaternion rotation = Quaternion.Euler(0, 0, 0);
-        Vector2 direccionDisparo = direccionJugador;
-        GameObject balaInstance = null; // Declarar la variable fuera del bloque if
+        Quaternion rotation = Quaternion.Euler(0, 0, 0); // Default rotation
+        Vector2 direccionDisparo = direccionJugador; // Shooting direction
+        GameObject balaInstance = null; // Declare bullet instance variable outside if block
 
-        // Detecta qué flecha se ha presionado y ajusta la dirección de disparo
+        // Detect which arrow key is pressed and adjust shooting direction
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia arriba
-            rotation = Quaternion.Euler(0, 0, 90);
-
+            direccionDisparo = Vector2.right; // Change shooting direction upwards
+            rotation = Quaternion.Euler(0, 0, 90); // Rotate bullet 90 degrees for upwards shooting
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia abajo
-            rotation = Quaternion.Euler(0, 0, -90);
+            direccionDisparo = Vector2.right; // Change shooting direction downwards
+            rotation = Quaternion.Euler(0, 0, -90); // Rotate bullet -90 degrees for downwards shooting
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            direccionDisparo = Vector2.left; // Cambia la dirección de disparo hacia la izquierda
-
+            direccionDisparo = Vector2.left; // Change shooting direction to the left
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia la derecha
+            direccionDisparo = Vector2.right; // Change shooting direction to the right
         }
 
-        // Instancia la bala con la dirección de disparo adecuada
+        // Instantiate the bullet with the appropriate shooting direction
         balaInstance = Instantiate(balaPrefab, controladorDisparo.position, rotation);
 
-        // Verifica si se ha instanciado una bala antes de intentar obtener el componente
+        // Check if a bullet is instantiated before trying to get the component
         if (balaInstance != null)
         {
-            // Obtener el script de la bala y establecer la dirección de disparo
+            // Get the bullet script and set the shooting direction
             Bala balaScript = balaInstance.GetComponent<Bala>();
             if (balaScript != null)
             {
@@ -143,22 +141,23 @@ public class DisparoPlayer : MonoBehaviour
         }
     }
 
+    // Method to shoot the ultimate ability
     private void DispararUltimate()
     {
-        Vector3 posicionCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        posicionCursor.z = 0f;
+        Vector3 posicionCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Get cursor position in world space
+        posicionCursor.z = 0f; // Set cursor position's Z coordinate to 0 (same as player)
 
-        Vector2 direccionDisparo = direccionJugador;
+        Vector2 direccionDisparo = direccionJugador; // Shooting direction
 
-        // Guardar la posición inicial al disparar la ultimate
+        // Save initial position when shooting the ultimate ability
         posicionInicial = transform.position;
 
-        // Verifica si la tecla W está siendo presionada
+        // Check if W key is pressed
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia arriba
+            direccionDisparo = Vector2.right; // Change shooting direction upwards
 
-            // Si disparamos hacia arriba, giramos la instancia en 90 grados en el eje Z
+            // If shooting upwards, rotate the instance by 90 degrees on the Z axis
             Quaternion rotation = Quaternion.Euler(0, 0, 90);
             GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, rotation);
             Bala balaScript = ultimateInstance.GetComponent<Bala>();
@@ -173,9 +172,9 @@ public class DisparoPlayer : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            direccionDisparo = Vector2.right; // Cambia la dirección de disparo hacia abajo
+            direccionDisparo = Vector2.right; // Change shooting direction downwards
 
-            // Si disparamos hacia abajo, giramos la instancia en -90 grados en el eje Z
+            // If shooting downwards, rotate the instance by -90 degrees on the Z axis
             Quaternion rotation = Quaternion.Euler(0, 0, -90);
             GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, rotation);
             Bala balaScript = ultimateInstance.GetComponent<Bala>();
@@ -192,7 +191,7 @@ public class DisparoPlayer : MonoBehaviour
         {
             if (direccionDisparo.x > 0f)
             {
-                // Si no disparamos hacia arriba ni hacia abajo, mantenemos la rotación normal
+                // If not shooting upwards or downwards, maintain normal rotation
                 GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, Quaternion.identity);
                 Bala balaScript = ultimateInstance.GetComponent<Bala>();
                 if (balaScript != null)
@@ -206,7 +205,7 @@ public class DisparoPlayer : MonoBehaviour
             }
             else if (direccionDisparo.x < 0f)
             {
-                // Si no disparamos hacia arriba ni hacia abajo, mantenemos la rotación normal pero invertida
+                // If not shooting upwards or downwards, maintain normal rotation but inverted
                 Quaternion rotation = Quaternion.Euler(0, 0, 180);
                 GameObject ultimateInstance = Instantiate(ultimatePrefab, controladorDisparo.position, rotation);
                 Bala balaScript = ultimateInstance.GetComponent<Bala>();
@@ -222,39 +221,41 @@ public class DisparoPlayer : MonoBehaviour
 
         }
 
-        // Aplicar retroceso al disparar la ultimate
+        // Apply recoil when shooting the ultimate ability
         AplicarRecoil();
     }
 
+    // Method to apply recoil after shooting the ultimate ability
     private void AplicarRecoil()
     {
-        // Aplicar retroceso (recoil) al jugador desde la posición inicial
-        float recoilAmountX = 0.5f; // Ajusta la cantidad de retroceso en el eje X según sea necesario
-        float recoilAmountY = 0.0f; // Ajusta la cantidad de retroceso en el eje Y según sea necesario
+        // Apply recoil to the player from the initial position
+        float recoilAmountX = 0.5f; // Adjust recoil amount on the X axis as needed
+        float recoilAmountY = 0.0f; // Adjust recoil amount on the Y axis as needed
 
-        // Calcula el vector de retroceso en el eje X
-        Vector2 recoilDirectionX = -direccionJugador.normalized; // Invertimos la dirección del jugador en el eje X
+        // Calculate recoil vector on the X axis
+        Vector2 recoilDirectionX = -direccionJugador.normalized; // Invert player direction on the X axis
         Vector2 recoilVectorX = recoilDirectionX * recoilAmountX;
 
-        // Calcula el vector de retroceso en el eje Y
-        Vector2 recoilVectorY = Vector2.up * recoilAmountY; // Aplicamos el retroceso hacia arriba en el eje Y
+        // Calculate recoil vector on the Y axis
+        Vector2 recoilVectorY = Vector2.up * recoilAmountY; // Apply recoil upwards on the Y axis
 
-        // Combina los vectores de retroceso en ambos ejes
+        // Combine recoil vectors on both axes
         Vector2 totalRecoilVector = recoilVectorX + recoilVectorY;
 
-        // Aplica el vector de retroceso a la posición inicial del jugador
+        // Apply recoil vector to the player's initial position
         transform.position = posicionInicial + totalRecoilVector;
     }
 
+    // Coroutine to make the ultimate ability UI blink
     private IEnumerator BlinkImage()
     {
-        Color originalColor = ultimateImg.color;
-        Color targetColor = Color.yellow;
-        float blinkSpeed = 0.5f; // Velocidad del parpadeo (en segundos)
+        Color originalColor = ultimateImg.color; // Original color of the ultimate ability UI
+        Color targetColor = Color.yellow; // Target color for blinking
+        float blinkSpeed = 0.5f; // Blink speed (in seconds)
 
         while (true)
         {
-            // Si está llenándose y el fillAmount es 1, cambia entre el color actual y amarillo
+            // If filling and fillAmount is 1, alternate between current color and yellow
             if (isFilling && ultimateImg.fillAmount == 1f)
             {
                 ultimateImg.color = targetColor;
@@ -264,7 +265,7 @@ public class DisparoPlayer : MonoBehaviour
             }
             else
             {
-                // Si no está llenándose o el fillAmount ya no es 1, vuelve al color original y espera un poco antes de verificar de nuevo
+                // If not filling or fillAmount is no longer 1, revert to original color and wait before checking again
                 ultimateImg.color = originalColor;
                 yield return new WaitForSeconds(0.1f);
             }

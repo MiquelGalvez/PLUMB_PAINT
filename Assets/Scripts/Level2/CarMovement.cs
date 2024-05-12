@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour
 {
-    private float speed;
-    private Animator animator;
-    private bool isMoving = false;
-    private float movementDuration = 0f;
+    private float speed; // The speed of the car
+    private Animator animator; // Reference to the Animator component
+    private bool isMoving = false; // Flag indicating whether the car is currently moving
+    private float movementDuration = 0f; // Duration the car has been moving
     private float maxMovementDuration = 10f; // Maximum duration the car can move before destruction
 
-    // Método para establecer la velocidad del carro
+    // Method to set the speed of the car
     public void SetSpeed(float newSpeed)
     {
         speed = newSpeed;
@@ -18,36 +18,36 @@ public class CarMovement : MonoBehaviour
 
     void Start()
     {
-        // Obtener el componente Animator del carro
+        // Get the Animator component of the car
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        // Mover el carro hacia la derecha con la velocidad especificada
+        // Move the car to the right with the specified speed
         transform.Translate(Vector3.right * speed * Time.deltaTime);
 
-        // Si el carro está moviéndose y la animación de movimiento no está activada, activarla
+        // If the car is moving and the movement animation is not active, activate it
         if (speed > 0 && !isMoving)
         {
             isMoving = true;
-            // Activar el parámetro "IsMoving" en el Animator
+            // Activate the "IsMoving" parameter in the Animator
             animator.SetBool("IsMoving", true);
         }
-        // Si el carro no está moviéndose y la animación de movimiento está activada, desactivarla
+        // If the car is not moving and the movement animation is active, deactivate it
         else if (speed == 0 && isMoving)
         {
             isMoving = false;
-            // Desactivar el parámetro "IsMoving" en el Animator
+            // Deactivate the "IsMoving" parameter in the Animator
             animator.SetBool("IsMoving", false);
         }
 
-        // Incrementar la duración de movimiento si el carro está moviéndose
+        // Increment the movement duration if the car is moving
         if (speed > 0)
         {
             movementDuration += Time.deltaTime;
 
-            // Destruir el carro si ha estado moviéndose durante más tiempo del máximo permitido
+            // Destroy the car if it has been moving for longer than the maximum allowed time
             if (movementDuration >= maxMovementDuration)
             {
                 Destroy(gameObject);

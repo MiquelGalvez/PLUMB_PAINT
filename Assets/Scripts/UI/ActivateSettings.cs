@@ -5,56 +5,54 @@ using UnityEngine;
 
 public class ActivateSettings : MonoBehaviour
 {
-    // Referencia a la cámara
+    // Reference to the camera
     private Camera mainCamera;
     [SerializeField] private GameObject canvassettings;
 
-    // Variable para controlar si el canvas de configuración está activo
+    // Variable to control if the settings canvas is active
     private bool isSettingsActive = false;
 
-    // Lista para almacenar los objetos desactivados
+    // List to store deactivated objects
     private List<GameObject> deactivatedObjects = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
-        // Obtener la cámara principal
+        // Get the main camera
         mainCamera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Si se presiona la tecla Escape
+        // If the Escape key is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isSettingsActive)
             {
-                // Desactivar el canvas de configuración
+                // Deactivate the settings canvas
                 canvassettings.SetActive(false);
 
                 Time.timeScale = 1f;
 
-                // Desbloquear el cursor y hacerlo visible
+                // Unlock the cursor and make it visible
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
 
-                
-
-                // Actualizar el estado del canvas de configuración
+                // Update the state of the settings canvas
                 isSettingsActive = false;
             }
             else
             {
-                // Desbloquear el cursor y hacerlo visible
+                // Unlock the cursor and make it visible
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
 
                 Time.timeScale = 0f;
-                // Activar el canvas de configuración
+                // Activate the settings canvas
                 canvassettings.SetActive(true);
 
-                // Actualizar el estado del canvas de configuración
+                // Update the state of the settings canvas
                 isSettingsActive = true;
             }
         }

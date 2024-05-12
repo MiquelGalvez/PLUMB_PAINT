@@ -5,30 +5,30 @@ using System.Runtime.CompilerServices;
 
 public class EnemyHealthController : MonoBehaviour
 {
-    [SerializeField] private GameObject scorePopUp;
-    [SerializeField] private int maxHealth = 100;
-    private int currentHealth;
+    [SerializeField] private GameObject scorePopUp; // Prefab for displaying score popup
+    [SerializeField] private int maxHealth = 100; // Maximum health of the enemy
+    private int currentHealth; // Current health of the enemy
 
-    private SpriteRenderer enemyRenderer;
-    private SpawnerController spawnerController;
-    private TurretController turretController;
-    private Color originalColor;
-    private PlayerController playerController;
+    private SpriteRenderer enemyRenderer; // Reference to the enemy's SpriteRenderer component
+    private SpawnerController spawnerController; // Reference to the spawner controller
+    private TurretController turretController; // Reference to the turret controller
+    private Color originalColor; // Original color of the enemy
+    private PlayerController playerController; // Reference to the player controller
     private Color damageColor = new Color(1f, 0.5f, 0.5f, 1f); // Light Red
 
     // Reference to the score counter
     private TextMeshProUGUI scoreCounter;
 
-    private const float flashDuration = 0.2f;
+    private const float flashDuration = 0.2f; // Duration of color flash when taking damage
 
     private void Start()
     {
-        playerController = FindAnyObjectByType<PlayerController>();
-        turretController = GetComponent<TurretController>();
-        spawnerController = FindAnyObjectByType<SpawnerController>();
-        currentHealth = maxHealth;
-        enemyRenderer = GetComponent<SpriteRenderer>();
-        originalColor = enemyRenderer.color;
+        playerController = FindAnyObjectByType<PlayerController>(); // Find the player controller
+        turretController = GetComponent<TurretController>(); // Get the turret controller component if present
+        spawnerController = FindAnyObjectByType<SpawnerController>(); // Find the spawner controller
+        currentHealth = maxHealth; // Set current health to maximum health
+        enemyRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component of the enemy
+        originalColor = enemyRenderer.color; // Store the original color of the enemy
 
         // Find the score counter by tag
         scoreCounter = FindTextMeshProUGUIByTag("ScoreCounter");
@@ -40,42 +40,42 @@ public class EnemyHealthController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        currentHealth -= damage; // Reduce the current health by the damage amount
+        if (currentHealth <= 0) // If current health drops to or below zero
         {
-            Die();
+            Die(); // Enemy dies
         }
         else
         {
-            StartCoroutine(FlashColor(damageColor));
+            StartCoroutine(FlashColor(damageColor)); // Flash enemy with damage color
         }
     }
 
     private void Die()
     {
-        if (gameObject.CompareTag("Turret"))
+        if (gameObject.CompareTag("Turret")) // If the enemy is a turret
         {
-            Animator animator = GetComponent<Animator>();
+            Animator animator = GetComponent<Animator>(); // Get the Animator component
             if (animator != null)
             {
-                animator.SetTrigger("Explode");
-                Invoke("DestroyGameObject", 0.1f);
+                animator.SetTrigger("Explode"); // Trigger explosion animation
+                Invoke("DestroyGameObject", 0.1f); // Destroy the GameObject after a short delay
             }
         }
-        else
+        else // If the enemy is not a turret
         {
-            DestroyGameObject();
+            DestroyGameObject(); // Destroy the GameObject immediately
         }
     }
 
     private void DestroyGameObject()
     {
-
-        int scoreValue = 0;
-        if (spawnerController != null)
+        int scoreValue = 0; // Initialize score value
+        if (spawnerController != null) // If spawner controller is found
         {
-            spawnerController.EnemyDestroyed();
+            spawnerController.EnemyDestroyed(); // Notify spawner controller that enemy is destroyed
         }
+        // Determine score value based on enemy tag
         if (gameObject.CompareTag("Turret"))
         {
             scoreValue = 100;
@@ -88,40 +88,42 @@ public class EnemyHealthController : MonoBehaviour
         {
             scoreValue = 500;
         }
+        // Instantiate score popup to display earned score
         GameObject popUp = Instantiate(scorePopUp, transform.position + (Vector3.up * 0.5f), Quaternion.identity);
         popUp.GetComponent<ScorePopUp>().SetText("+ " + scoreValue.ToString());
 
+        // Update score counter
         if (scoreCounter != null)
         {
             int currentScore = int.Parse(scoreCounter.text);
             currentScore += scoreValue;
             scoreCounter.text = currentScore.ToString();
         }
-        Destroy(gameObject);
+        Destroy(gameObject); // Destroy the enemy GameObject
     }
 
     private IEnumerator FlashColor(Color flashColor)
     {
-        enemyRenderer.color = flashColor;
-        yield return new WaitForSeconds(flashDuration);
-        enemyRenderer.color = originalColor;
+        enemyRenderer.color = flashColor; // Set enemy color to flash color
+        yield return new WaitForSeconds(flashDuration); // Wait for flash duration
+        enemyRenderer.color = originalColor; // Restore original enemy color
     }
 
     // Helper method to find any object by type
     private T FindAnyObjectByType<T>() where T : Component
     {
-        return FindObjectOfType<T>();
+        return FindObjectOfType<T>(); // Find and return object of specified type
     }
 
     // Helper method to find TextMeshProUGUI by tag
     private TextMeshProUGUI FindTextMeshProUGUIByTag(string tag)
     {
-        TextMeshProUGUI[] textMeshes = FindObjectsOfType<TextMeshProUGUI>();
+        TextMeshProUGUI[] textMeshes = FindObjectsOfType<TextMeshProUGUI>(); // Find all TextMeshProUGUI objects
         foreach (TextMeshProUGUI textMesh in textMeshes)
         {
-            if (textMesh.CompareTag(tag))
+            if (textMesh.CompareTag(tag)) // If object has specified tag
             {
-                return textMesh;
+                return textMesh; // Return the object
             }
         }
         return null; // If no object with the tag is found

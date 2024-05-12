@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class SpaceshipActive : MonoBehaviour
 {
-    public GameObject objectToCount;
-    public GameObject objectToActivate;
-    public GameObject objectToActivate2;
+    public GameObject objectToCount; // Parent GameObject whose children's activity will be checked
+    public GameObject objectToActivate; // GameObject to activate when all children of objectToCount are inactive
+    public GameObject objectToActivate2; // Additional GameObject to activate when all children of objectToCount are inactive
 
     // Update is called once per frame
     void Update()
     {
-        bool allChildrenInactive = true;
+        bool allChildrenInactive = true; // Flag to track if all children of objectToCount are inactive
 
-        // Iterar a través de todos los hijos de objectToCount
+        // Iterate through all children of objectToCount
         foreach (Transform child in objectToCount.transform)
         {
-            // Si algún hijo está activo, establecemos la bandera allChildrenInactive en falso y salimos del bucle
+            // If any child is active, set the allChildrenInactive flag to false and break out of the loop
             if (child.gameObject.activeSelf)
             {
                 allChildrenInactive = false;
@@ -22,14 +22,16 @@ public class SpaceshipActive : MonoBehaviour
             }
         }
 
-        // Activar los GameObjects basado en el estado de los hijos
+        // Activate or deactivate GameObjects based on the state of the children
         if (allChildrenInactive)
         {
+            // Activate the GameObjects when all children are inactive
             objectToActivate.SetActive(true);
             objectToActivate2.SetActive(true);
         }
         else
         {
+            // Deactivate the GameObjects when any child is active
             objectToActivate.SetActive(false);
             objectToActivate2.SetActive(false);
         }

@@ -4,63 +4,63 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Comptador : MonoBehaviour
+public class Counter : MonoBehaviour
 {
-    public TextMeshProUGUI textoContador; // Referencia al objeto de texto donde se mostrará el contador
-    public GameObject imagenParpadeante; // Referencia al objeto de la imagen que parpadeará cuando el tiempo llegue a cero
-    [SerializeField] GameObject PassScene; // Referencia al objeto de la imagen que parpadeará cuando el tiempo llegue a cero
+    public TextMeshProUGUI counterText; // Reference to the text object where the counter will be displayed
+    public GameObject flashingImage; // Reference to the image object that will flash when time runs out
+    [SerializeField] GameObject PassScene; // Reference to the image object that will flash when time runs out
 
     private GameObject spawner;
-    private float tiempoRestante = 10f; // Tiempo inicial en segundos (dos minutos)
-    private bool tiempoTerminado = false; // Flag para verificar si el tiempo ha terminado
+    private float remainingTime = 10f; // Initial time in seconds (two minutes)
+    private bool timeUp = false; // Flag to check if time is up
 
     private void Start()
     {
         spawner = GameObject.FindGameObjectWithTag("Spawn1");
-        StartCoroutine(ActualizarContador()); // Comenzar la coroutine para actualizar el contador
+        StartCoroutine(UpdateCounter()); // Start the coroutine to update the counter
     }
 
-    private IEnumerator ActualizarContador()
+    private IEnumerator UpdateCounter()
     {
-        while (tiempoRestante > 0)
+        while (remainingTime > 0)
         {
-            // Actualizar el texto del contador con el tiempo restante formateado
-            textoContador.text = FormatearTiempo(tiempoRestante);
+            // Update the counter text with the formatted remaining time
+            counterText.text = FormatTime(remainingTime);
 
-            // Reducir el tiempo restante
-            tiempoRestante -= Time.deltaTime;
+            // Reduce the remaining time
+            remainingTime -= Time.deltaTime;
 
-            yield return null; // Esperar un frame antes de continuar
+            yield return null; // Wait for one frame before continuing
         }
 
-        // Cuando el tiempo se acabe, mostrar "GO!!!!", desactivar el spawner y activar el flag de tiempo terminado
-        textoContador.text = "GO!!!!";
-        tiempoTerminado = true;
-        imagenParpadeante.SetActive(true);
+        // When time is up, show "GO!!!!", deactivate the spawner, and set the time up flag
+        counterText.text = "GO!!!!";
+        timeUp = true;
+        flashingImage.SetActive(true);
         PassScene.SetActive(true);
-        StartCoroutine(ParpadearImagen());
+        StartCoroutine(FlashImage());
     }
 
-    private string FormatearTiempo(float tiempo)
+    private string FormatTime(float time)
     {
-        // Convertir el tiempo de segundos a minutos y segundos
-        int minutos = Mathf.FloorToInt(tiempo / 60);
-        int segundos = Mathf.FloorToInt(tiempo % 60);
+        // Convert time from seconds to minutes and seconds
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
 
-        // Formatear el tiempo en minutos y segundos
-        string tiempoFormateado = string.Format("{0:00}:{1:00}", minutos, segundos);
+        // Format time into minutes and seconds
+        string formattedTime = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        return tiempoFormateado;
+        return formattedTime;
     }
 
-    private IEnumerator ParpadearImagen()
+    private IEnumerator FlashImage()
     {
-        while (tiempoTerminado)
+        while (timeUp)
         {
-            // Alternar entre activar y desactivar la imagen parpadeante
-            imagenParpadeante.SetActive(!imagenParpadeante.activeSelf);
+            // Toggle between activating and deactivating the flashing image
+            flashingImage.SetActive(!flashingImage.activeSelf);
 
-            // Esperar un corto período de tiempo antes de continuar
+            // Wait for a short period of time before continuing
             yield return new WaitForSeconds(0.5f);
         }
     }

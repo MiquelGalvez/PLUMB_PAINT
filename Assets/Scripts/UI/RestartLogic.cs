@@ -11,7 +11,7 @@ public class RestartLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Reproduir el so de col·lisió si l'objecte amb el qual ha col·lisionat és el jugador
+        // Show the You Died screen when in collision with the player
         if (other.CompareTag("Player"))
         {
             Time.timeScale = 0f;

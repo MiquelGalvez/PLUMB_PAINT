@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class CinematicControlCam : MonoBehaviour
 {
-    public Transform puntoDestino; // Punto al que la cámara se moverá
-    public GameObject player; // Objeto que se activará una vez que la cámara llegue al punto destino
-    public GameObject UI; // Objeto que se activará una vez que la cámara llegue al punto destino
-    public GameObject SpawnCars; // Objeto que se activará una vez que la cámara llegue al punto destino
+    public Transform puntoDestino; // Point to which the camera will move
+    public GameObject player; // Object that will be activated once the camera reaches the destination point
+    public GameObject UI; // Object that will be activated once the camera reaches the destination point
+    public GameObject SpawnCars; // Object that will be activated once the camera reaches the destination point
 
-    public float velocidad = 5f; // Velocidad de desplazamiento de la cámara
-    public float tolerancia = 0.1f; // Tolerancia para considerar que la cámara ha llegado al punto destino
+    public float velocidad = 5f; // Movement speed of the camera
+    public float tolerancia = 0.1f; // Tolerance to consider that the camera has reached the destination point
 
-    private bool alcanzadoDestino = false; // Bandera para verificar si se ha alcanzado el punto destino
+    private bool alcanzadoDestino = false; // Flag to check if the destination point has been reached
 
     private void Start()
     {
@@ -21,19 +21,19 @@ public class CinematicControlCam : MonoBehaviour
 
     void Update()
     {
-        // Verificar si no se ha alcanzado el punto destino
+        // Check if the destination point has not been reached
         if (!alcanzadoDestino)
         {
-            // Calcular la posición deseada con la misma posición en Y y Z, y la posición deseada en X
+            // Calculate the desired position with the same Y and Z position, and the desired X position
             Vector3 posicionDeseada = new Vector3(puntoDestino.position.x, transform.position.y, transform.position.z);
 
-            // Mover la cámara hacia la posición deseada
+            // Move the camera towards the desired position
             transform.position = Vector3.MoveTowards(transform.position, posicionDeseada, velocidad * Time.deltaTime);
 
-            // Verificar si la cámara está lo suficientemente cerca de la posición deseada en el eje X
+            // Check if the camera is close enough to the desired position on the X axis
             if (Mathf.Abs(transform.position.x - puntoDestino.position.x) < tolerancia)
             {
-                // Establecer la bandera de alcanzadoDestino como verdadera
+                // Set the alcanzadoDestino flag to true
                 alcanzadoDestino = true;
             }
         }

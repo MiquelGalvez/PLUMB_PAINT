@@ -4,27 +4,26 @@ using UnityEngine.UI;
 
 public class PlayerInfoDisplay : MonoBehaviour
 {
-    public TextMeshProUGUI playerNameText;
-    private PlayerData playerData;
+    public TextMeshProUGUI playerNameText; // Reference to the TextMeshProUGUI component for displaying player name
+    private PlayerData playerData; // Reference to the player data
 
-    private DatabaseAccess databaseAccess;
+    private DatabaseAccess databaseAccess; // Reference to the database access component
 
     private void Start()
     {
-        databaseAccess = new DatabaseAccess();
-        playerData = GameData.playerData;
-        
-        // Obtener la puntuación del jugador y actualizar el texto
+        databaseAccess = new DatabaseAccess(); // Initialize database access component
+        playerData = GameData.playerData; // Get reference to the player data
+
+        // Get the player's score and update the text
         UpdatePlayerInfo();
     }
 
     public void UpdatePlayerInfo()
     {
-
-        // Obtener la puntuación del jugador
+        // Get the player's score from the database
         double playerScore = databaseAccess.GetPlayerScore(playerData.playerName);
 
-        // Actualizar los campos de texto con la información obtenida
+        // Update the text fields with the retrieved information
         playerNameText.text = "Player:  " + playerData.playerName + "   " + playerScore.ToString();
     }
 }

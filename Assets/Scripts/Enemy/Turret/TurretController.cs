@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.InputSystem.HID;
 
 public class TurretController : MonoBehaviour
 {
-    // Declaración de variables
     [SerializeField] GameObject bulletPrefab;
     public AudioSource audiosource;
     [SerializeField] Transform spawnPoint;
@@ -17,12 +15,10 @@ public class TurretController : MonoBehaviour
     public AudioClip takedamage;
     [SerializeField] Image fillImage;
     private EnemyHealthController enemyHealthController;
-
     private float shootTimer = 0f;
     private float currentShootInterval;
     private bool isShooting = false;
     private Animator turretAnimator;
-    private int shotsReceived = 0;
     private SpriteRenderer turretRenderer;
     private GameObject player;
 
@@ -33,32 +29,31 @@ public class TurretController : MonoBehaviour
         currentShootInterval = Random.Range(minShootInterval, maxShootInterval);
         enemyHealthController = GetComponent<EnemyHealthController>();
         audiosource = GetComponent<AudioSource>();
-        player = GameObject.FindGameObjectWithTag("Player"); // Busca el jugador al iniciar
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
+    // Function to handle collision with player's bullets
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player Shoot"))
         {
-            float fillAmount = 0.02f;
-            fillImage.fillAmount += fillAmount;
+            fillImage.fillAmount += 0.02f;
             Destroy(other.gameObject);
             enemyHealthController.TakeDamage(1);
         }
         if (other.CompareTag("UltimateShoot"))
         {
-            float fillAmount = 0.09f;
-            fillImage.fillAmount += fillAmount;
+            fillImage.fillAmount += 0.09f;
             audiosource.PlayOneShot(takedamage);
             enemyHealthController.TakeDamage(15);
         }
     }
+
+    // Main update loop
     void Update()
     {
-        // Calcula la dirección del jugador
         Vector3 playerDirection = player.transform.position - transform.position;
 
-        // Si el jugador está a la derecha de la torreta, voltear el sprite y disparar hacia la derecha
         if (playerDirection.x > 0)
         {
             turretRenderer.flipX = true;
@@ -95,6 +90,7 @@ public class TurretController : MonoBehaviour
         }
     }
 
+    // Function to handle shooting behavior
     void Shoot()
     {
         if (turretAnimator != null)
@@ -107,7 +103,6 @@ public class TurretController : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
-        // Disparar hacia la izquierda si el jugador está a la izquierda de la torreta
         if (turretRenderer.flipX)
         {
             rb.velocity = Vector2.right * bulletSpeed;
@@ -120,6 +115,7 @@ public class TurretController : MonoBehaviour
         StartCoroutine(DestroyBulletAfterDistance(bullet));
     }
 
+    // Coroutine to destroy bullet after traveling a certain distance
     IEnumerator DestroyBulletAfterDistance(GameObject bullet)
     {
         Vector3 initialPosition = bullet.transform.position;

@@ -127,7 +127,7 @@ public class CopController : MonoBehaviour
         }
     }
 
-
+    // Function asignated to a fram of the animation
     void Shoot()
     {
         // Obtener la dirección hacia el jugador
@@ -149,6 +149,7 @@ public class CopController : MonoBehaviour
         audioSource.Play();
     }
 
+    // Function asignated to a fram of the animation
     void ShootDown()
     {
         // Shoot to the right

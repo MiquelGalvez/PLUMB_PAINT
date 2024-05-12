@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class SpawnCar : MonoBehaviour
 {
-    [SerializeField] private GameObject prefab; // El prefab que quieres instanciar
-    private float tiempoMinimo = 4f; // Tiempo mínimo entre cada instancia
-    private float tiempoMaximo = 10f; // Tiempo máximo entre cada instancia
+    [SerializeField] private GameObject prefab; // The prefab you want to instantiate
+    private float minTime = 4f; // Minimum time between each instance
+    private float maxTime = 10f; // Maximum time between each instance
 
     void Start()
     {
-        // Inicializamos el tiempo para la primera instancia
-        Invoke("SpawnPrefab", Random.Range(tiempoMinimo, tiempoMaximo));
+        // Initialize the time for the first instance
+        Invoke("SpawnPrefab", Random.Range(minTime, maxTime));
     }
 
+    // Function to spawn the prefab
     void SpawnPrefab()
     {
-        // Instanciamos el prefab en la posición del GeneradorPrefab
+        // Instantiate the prefab at the position of the SpawnPoint
         GameObject car = Instantiate(prefab, transform.position, Quaternion.identity);
-        // Obtener el script de movimiento del carro
+        // Get the car movement script
         CarMovement carMovement = car.GetComponent<CarMovement>();
-        // Configurar la velocidad del carro
+        // Set the speed of the car
         carMovement.SetSpeed(7f);
 
-        // Llamar al método SpawnPrefab de nuevo después de un tiempo aleatorio
-        Invoke("SpawnPrefab", Random.Range(tiempoMinimo, tiempoMaximo));
+        // Call the SpawnPrefab method again after a random time
+        Invoke("SpawnPrefab", Random.Range(minTime, maxTime));
     }
 }

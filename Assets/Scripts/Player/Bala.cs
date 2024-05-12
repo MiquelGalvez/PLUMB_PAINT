@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class Bala : MonoBehaviour
 {
-    [SerializeField] private float velocidad;
-    private Vector2 direccionDeDisparo = Vector2.right; // Por defecto, la bala dispara hacia la derecha
+    [SerializeField] private float velocidad; // Speed of the bullet
+    private Vector2 direccionDeDisparo = Vector2.right; // Default direction of the bullet is right
 
-    // Método para establecer la dirección de disparo desde el personaje
+    // Method to set the shooting direction from the character
     public void EstablecerDireccionDeDisparo(Vector2 direccion)
     {
-        direccionDeDisparo = direccion.normalized; // Normalizamos el vector de dirección
-
+        direccionDeDisparo = direccion.normalized; // Normalize the direction vector
     }
 
     private void Update()
     {
-        // Movemos la bala en la dirección de disparo
+        // Move the bullet in the shooting direction
         transform.Translate(direccionDeDisparo * velocidad * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Check if the bullet collides with an object tagged as "Bullet" and destroy it
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Destroy(collision.gameObject);

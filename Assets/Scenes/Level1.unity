@@ -459,6 +459,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223991263}
   m_CullTransparentMesh: 1
+--- !u!114 &229825603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1241486754097437531, guid: 6459854a699aff344b9cf75394c1bcae, type: 3}
+  m_PrefabInstance: {fileID: 8705842766167001477}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &276314396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6544914113929961641, guid: f1c0015467521470d9c9ef879382c0dc, type: 3}
@@ -3151,6 +3162,14 @@ PrefabInstance:
       propertyPath: PassScene
       value: 
       objectReference: {fileID: 1267056650}
+    - target: {fileID: 8940664839861389700, guid: 6459854a699aff344b9cf75394c1bcae, type: 3}
+      propertyPath: counterText
+      value: 
+      objectReference: {fileID: 229825603}
+    - target: {fileID: 8940664839861389700, guid: 6459854a699aff344b9cf75394c1bcae, type: 3}
+      propertyPath: flashingImage
+      value: 
+      objectReference: {fileID: 2136184900}
     - target: {fileID: 8940664839861389700, guid: 6459854a699aff344b9cf75394c1bcae, type: 3}
       propertyPath: imagenParpadeante
       value: 

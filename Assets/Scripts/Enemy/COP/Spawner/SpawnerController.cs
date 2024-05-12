@@ -3,33 +3,33 @@ using UnityEngine;
 
 public class SpawnerController : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    private GameObject spawnedEnemy;
-    private bool shouldSpawn = true;
-    private bool enemySpawned = false;
-    private float respawnTimer = 30f; // Tiempo máximo antes de respawnear un nuevo enemigo
-    private float currentTimer = 0f;
+    public GameObject enemyPrefab; // Prefab of the enemy to spawn
+    private GameObject spawnedEnemy; // Reference to the spawned enemy GameObject
+    private bool shouldSpawn = true; // Flag to control spawning
+    private bool enemySpawned = false; // Flag to track if an enemy has been spawned
+    private float respawnTimer = 30f; // Maximum time before respawning a new enemy
+    private float currentTimer = 0f; // Timer to track time since last enemy spawned
 
-    public enum SpawnPoint { Spawn1, Spawn2 };
-    public SpawnPoint spawnPoint;
+    public enum SpawnPoint { Spawn1, Spawn2 }; // Enum to define spawn points
+    public SpawnPoint spawnPoint; // Selected spawn point
 
     void Start()
     {
-        StartCoroutine(SpawnEnemyWithRandomDelay());
+        StartCoroutine(SpawnEnemyWithRandomDelay()); // Start spawning enemies with random delay
     }
 
     IEnumerator SpawnEnemyWithRandomDelay()
     {
         while (shouldSpawn)
         {
-            // Solo intenta generar un enemigo si no hay uno ya en el escenario
+            // Only attempt to spawn an enemy if there isn't one already in the scene
             if (!enemySpawned)
             {
-                SpawnEnemy();
+                SpawnEnemy(); // Spawn an enemy
             }
 
-            // Espera un tiempo aleatorio antes de intentar spawnear otro enemigo
-            float randomDelay = Random.Range(1.0f, 5.0f); // Tiempo de espera aleatorio entre 1 y 5 segundos
+            // Wait for a random time before attempting to spawn another enemy
+            float randomDelay = Random.Range(1.0f, 5.0f); // Random delay between 1 and 5 seconds
             yield return new WaitForSeconds(randomDelay);
         }
     }
@@ -42,39 +42,39 @@ public class SpawnerController : MonoBehaviour
             return;
         }
 
-        // Solo spawnear un nuevo enemigo si no hay uno ya en el escenario
+        // Only spawn a new enemy if there isn't one already in the scene
         if (spawnedEnemy == null)
         {
-            spawnedEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-            CopController enemyMovement = spawnedEnemy.GetComponent<CopController>();
+            spawnedEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity); // Instantiate enemy
+            CopController enemyMovement = spawnedEnemy.GetComponent<CopController>(); // Get enemy movement component
 
             switch (spawnPoint)
             {
                 case SpawnPoint.Spawn1:
-                    enemyMovement.FaceLeft();
+                    enemyMovement.FaceLeft(); // Face left if spawn point is Spawn1
                     break;
                 case SpawnPoint.Spawn2:
-                    enemyMovement.FaceRight();
+                    enemyMovement.FaceRight(); // Face right if spawn point is Spawn2
                     break;
                 default:
                     Debug.LogWarning("Invalid spawn point.");
                     break;
             }
 
-            // Guardar referencia al Spawner actual
+            // Save reference to the current spawner in the spawned enemy
             spawnedEnemy.GetComponent<CopController>().spawner = this;
-            enemySpawned = true; // Marcar que se ha spawnado un enemigo
-            currentTimer = 0f; // Reiniciar el temporizador cuando se spawnée un nuevo enemigo
+            enemySpawned = true; // Mark that an enemy has been spawned
+            currentTimer = 0f; // Reset the timer when a new enemy is spawned
         }
     }
 
     void Update()
     {
-        // Incrementar el temporizador si hay un enemigo en el escenario
+        // Increment the timer if an enemy is in the scene
         if (enemySpawned)
         {
             currentTimer += Time.deltaTime;
-            // Si el temporizador excede el límite, respawnear un nuevo enemigo
+            // If the timer exceeds the limit, respawn a new enemy
             if (currentTimer >= respawnTimer)
             {
                 RespawnEnemy();
@@ -84,20 +84,20 @@ public class SpawnerController : MonoBehaviour
 
     void RespawnEnemy()
     {
-        spawnedEnemy = null;
-        enemySpawned = false;
-        SpawnEnemy(); // Spawnear un nuevo enemigo
+        spawnedEnemy = null; // Clear reference to the spawned enemy
+        enemySpawned = false; // Mark that no enemy is currently spawned
+        SpawnEnemy(); // Spawn a new enemy
     }
 
-    // Método que el enemigo llama cuando es destruido para indicar que puede spawnear otro
+    // Method called by the enemy when destroyed to indicate that another can spawn
     public void EnemyDestroyed()
     {
-        enemySpawned = false;
+        enemySpawned = false; // Mark that no enemy is currently spawned
     }
 
-    // Método para detener el spawner
+    // Method to stop spawning enemies
     public void StopSpawning()
     {
-        shouldSpawn = false;
+        shouldSpawn = false; // Disable spawning
     }
 }

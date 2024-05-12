@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class AtackBoss : MonoBehaviour
 {
-    [SerializeField] GameObject prefab; // Prefab a instanciar
-    private float tiempoMinimo = 5f; // Tiempo mínimo entre instancias
-    private float tiempoMaximo = 10f; // Tiempo máximo entre instancias
-    private float velocidadMovimiento = 3f; // Velocidad de movimiento del prefab hacia la izquierda
+    [SerializeField] GameObject prefab; // Prefab to instantiate
+    private float minTime = 5f; // Minimum time between instances
+    private float maxTime = 10f; // Maximum time between instances
+    private float movementSpeed = 3f; // Movement speed of the instantiated prefab to the left
 
-    private float tiempoSiguienteInstancia; // Tiempo para la próxima instancia
+    private float nextInstanceTime; // Time for the next instance
 
     void Start()
-    { 
-        // Inicializar el tiempo para la primera instancia
-        tiempoSiguienteInstancia = Time.time + Random.Range(tiempoMinimo, tiempoMaximo);
+    {
+        // Initialize the time for the first instance
+        nextInstanceTime = Time.time + Random.Range(minTime, maxTime);
     }
 
     void Update()
     {
-        // Verificar si es tiempo de generar una nueva instancia
-        if (Time.time >= tiempoSiguienteInstancia)
+        // Check if it's time to generate a new instance
+        if (Time.time >= nextInstanceTime)
         {
-            Quaternion rotation = Quaternion.Euler(0, 0, 180);
-            // Instanciar el prefab
-            GameObject nuevaInstancia = Instantiate(prefab, transform.position, rotation);
-            // Aplicar movimiento hacia la izquierda
-            nuevaInstancia.GetComponent<Rigidbody2D>().velocity = Vector2.left * velocidadMovimiento;
-            // Actualizar el tiempo para la próxima instancia
-            tiempoSiguienteInstancia = Time.time + Random.Range(tiempoMinimo, tiempoMaximo);
+            Quaternion rotation = Quaternion.Euler(0, 0, 180); // Rotation of the instantiated object (180 degrees)
+            // Instantiate the prefab
+            GameObject newInstance = Instantiate(prefab, transform.position, rotation);
+            // Apply leftward movement
+            newInstance.GetComponent<Rigidbody2D>().velocity = Vector2.left * movementSpeed;
+            // Update the time for the next instance
+            nextInstanceTime = Time.time + Random.Range(minTime, maxTime);
         }
     }
 }

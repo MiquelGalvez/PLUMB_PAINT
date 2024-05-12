@@ -1,60 +1,60 @@
 using UnityEngine;
 
-public class ControladorDisparo : MonoBehaviour
+public class ShootingController : MonoBehaviour
 {
-    public GameObject balaPrefab; // Prefab de la bala que disparará el ControladorDisparo
-    public Transform puntoDisparo; // Punto desde donde se dispararán las balas
-    public float velocidadBala = 10f; // Velocidad a la que se moverá la bala
-    public float cadenciaDisparo = 1f; // Cadencia de disparo en segundos
-    public float tiempoDestruccionBala = 2f; // Tiempo en segundos antes de destruir la bala
+    public GameObject bulletPrefab; // Prefab of the bullet that the ShootingController will shoot
+    public Transform shootPoint; // Point from which bullets will be shot
+    public float bulletSpeed = 10f; // Speed at which the bullet will move
+    public float fireRate = 1f; // Firing rate in seconds
+    public float bulletDestroyTime = 2f; // Time in seconds before destroying the bullet
 
-    private Transform jugador; // Referencia al transform del jugador
-    private float tiempoUltimoDisparo; // Tiempo en el que se realizó el último disparo
-    private Animator animator; // Referencia al Animator
+    private Transform player; // Reference to the player's transform
+    private float lastShootTime; // Time when the last shot was fired
+    private Animator animator; // Reference to the Animator component
 
     void Start()
     {
-        // Buscar el GameObject del jugador al inicio
-        jugador = GameObject.FindGameObjectWithTag("Player").transform;
-        // Obtener el componente Animator
+        // Find the player GameObject at the start
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        // Get the Animator component
         animator = GetComponent<Animator>();
-        // Inicializar el tiempo del último disparo al inicio del juego
-        tiempoUltimoDisparo = -cadenciaDisparo;
+        // Initialize the last shoot time at the start of the game
+        lastShootTime = -fireRate;
     }
 
     void Update()
     {
-        // Verificar si el jugador está dentro del campo de visión y la animación PlayerDetect está activa
-        if (Vector2.Distance(transform.position, jugador.position) < 10f && animator.GetBool("PlayerDetect"))
+        // Check if the player is within the field of view and the PlayerDetect animation is active
+        if (Vector2.Distance(transform.position, player.position) < 10f && animator.GetBool("PlayerDetect"))
         {
-            // Verificar si ha pasado suficiente tiempo desde el último disparo
-            if (Time.time - tiempoUltimoDisparo > cadenciaDisparo)
+            // Check if enough time has passed since the last shot
+            if (Time.time - lastShootTime > fireRate)
             {
-                // Realizar el disparo
-                Disparar();
-                // Actualizar el tiempo del último disparo
-                tiempoUltimoDisparo = Time.time;
+                // Perform the shot
+                Shoot();
+                // Update the last shoot time
+                lastShootTime = Time.time;
             }
         }
     }
 
-    void Disparar()
+    void Shoot()
     {
-        // Determinar la dirección de disparo en función de la rotación del enemigo
-        Vector2 direccion = Vector2.right; // Por defecto, dispara hacia la derecha
-        if (transform.rotation.eulerAngles.y == 180f) // Si la rotación es -180 grados
+        // Determine the shooting direction based on the enemy's rotation
+        Vector2 direction = Vector2.right; // By default, shoot to the right
+        if (transform.rotation.eulerAngles.y == 180f) // If the rotation is -180 degrees
         {
-            direccion = Vector2.left; // Dispara hacia la izquierda
+            direction = Vector2.left; // Shoot to the left
         }
 
-        // Instanciar una nueva bala
-        GameObject bala = Instantiate(balaPrefab, puntoDisparo.position, Quaternion.identity);
+        // Instantiate a new bullet
+        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
 
-        // Obtener el componente Rigidbody2D de la bala instanciada y asignarle velocidad
-        Rigidbody2D rb = bala.GetComponent<Rigidbody2D>();
-        rb.velocity = direccion * velocidadBala;
+        // Get the Rigidbody2D component of the instantiated bullet and assign velocity
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        rb.velocity = direction * bulletSpeed;
 
-        // Destruir la bala después de un cierto tiempo
-        Destroy(bala, tiempoDestruccionBala);
+        // Destroy the bullet after a certain time
+        Destroy(bullet, bulletDestroyTime);
     }
 }

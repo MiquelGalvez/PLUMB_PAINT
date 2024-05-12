@@ -21,18 +21,17 @@ public class MainMenu : MonoBehaviour
     {
         sceneObjects = this.gameObject;
         Cursor.visible = false;
-
-        // Configura el color inicial de los textos de los botones
-        UpdateButtonColors();
+        UpdateButtonColors(); // Set initial button colors
     }
 
     void Update()
     {
-        NavigateMenu();
+        NavigateMenu(); // Navigate through the menu
     }
 
     void NavigateMenu()
     {
+        // Move selection up when 'W' key is pressed, down when 'S' key is pressed
         if (Input.GetKeyDown(KeyCode.W))
         {
             currentOptionIndex = (currentOptionIndex - 1 + menuButtons.Length) % menuButtons.Length;
@@ -44,12 +43,14 @@ public class MainMenu : MonoBehaviour
             UpdateButtonColors();
         }
 
+        // Trigger the selected option when space or return key is pressed
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             TriggerOption();
         }
     }
 
+    // Update the color of the menu buttons based on selection
     void UpdateButtonColors()
     {
         for (int i = 0; i < menuButtons.Length; i++)
@@ -57,14 +58,14 @@ public class MainMenu : MonoBehaviour
             TextMeshProUGUI buttonText = menuButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             if (buttonText != null)
             {
-                buttonText.color = (i == currentOptionIndex) ? new Color(0.776f, 0.698f, 1f) : Color.white; // Color.C6B2FF en formato RGB
+                buttonText.color = (i == currentOptionIndex) ? new Color(0.776f, 0.698f, 1f) : Color.white; // RGB format: Color.C6B2FF
             }
         }
 
-        // Actualiza el resaltado de los botones
-        UpdateButtonHighlights();
+        UpdateButtonHighlights(); // Update button highlights
     }
 
+    // Update the visibility of button highlights based on selection
     void UpdateButtonHighlights()
     {
         highlightPlay.SetActive(currentOptionIndex == 0);
@@ -73,11 +74,13 @@ public class MainMenu : MonoBehaviour
         highlightExit.SetActive(currentOptionIndex == 3);
     }
 
+    // Load the play scene when the play button is pressed
     public void OnPlayButton()
     {
-       SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1);
     }
 
+    // Activate the settings canvas and hide the main menu when settings button is pressed
     public void OnSettingsButton()
     {
         sceneObjects.SetActive(false);
@@ -85,6 +88,7 @@ public class MainMenu : MonoBehaviour
         Cursor.visible = true;
     }
 
+    // Return from settings to the main menu
     public void OnBackSettings()
     {
         sceneObjects.SetActive(true);
@@ -92,15 +96,19 @@ public class MainMenu : MonoBehaviour
         Cursor.visible = false;
     }
 
+    // Quit the application when the exit button is pressed
     public void OnQuitButton()
     {
         Application.Quit();
     }
+
+    // Load the top 5 scores scene
     public void OnTop5()
     {
         SceneManager.LoadScene(5);
     }
 
+    // Trigger the action associated with the current selected option
     void TriggerOption()
     {
         switch (currentOptionIndex)
