@@ -11,7 +11,7 @@ public class Counter : MonoBehaviour
     [SerializeField] GameObject PassScene; // Reference to the image object that will flash when time runs out
 
     private GameObject spawner;
-    private float remainingTime = 120f; // Initial time in seconds (two minutes)
+    private float remainingTime = 31f; // Initial time in seconds (two minutes)
     private bool timeUp = false; // Flag to check if time is up
 
     private void Start()
