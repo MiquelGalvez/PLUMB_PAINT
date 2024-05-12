@@ -2461,6 +2461,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 374989155868922162, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 374989155868922162, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 374989155868922162, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569544235659894864, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569544235659894864, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2338584541850756731, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
       propertyPath: m_Camera
       value: 
@@ -2468,6 +2488,30 @@ PrefabInstance:
     - target: {fileID: 2433178802893775348, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
       propertyPath: m_Name
       value: SetingsCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433178802893775348, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450839700296197232, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450839700296197232, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450839700296197232, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622095338724545613, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622095338724545613, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5680186681532823708, guid: a2eee9d9926eaf6498449aed54f50af9, type: 3}
       propertyPath: m_Pivot.x
