@@ -114,12 +114,12 @@ public class SelectName : MonoBehaviour
 
         gameObjectToDeactivate.SetActive(true);
         // Create a new PlayerData object with the modified text
-        dataplayer = new PlayerData(inputText);
+        dataplayer = new PlayerData(inputText.ToLower());
         // Save in GameData
         GameData.playerData = dataplayer;
 
         // Update the last entered name in PlayerData
-        PlayerData.lastEnteredName = inputText;
+        PlayerData.lastEnteredName = inputText.ToLower();
     }
 
     // Method to check if the given text contains special characters
