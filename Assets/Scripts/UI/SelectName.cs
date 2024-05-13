@@ -14,6 +14,8 @@ public class SelectName : MonoBehaviour
     [SerializeField] private TMP_InputField inputField; // Reference to the input field
     private DatabaseAccess databaseaccess; // Reference to DatabaseAccess object
     [SerializeField] private GameObject errorname;
+    [SerializeField] private TextMeshProUGUI texterror;
+    [SerializeField] private GameObject gameObjectToDeactivate;
 
     // Use Start method to populate the input field with the last entered name
     void Start()
@@ -32,25 +34,51 @@ public class SelectName : MonoBehaviour
         errorname.SetActive(false);
         // Get the entered text
         string inputText = input.text;
-
         // Check if the name contains special characters
         if (HasSpecialCharacters(inputText))
         {
+            gameObjectToDeactivate.SetActive(false);
             Debug.LogWarning("Name cannot contain special characters!");
             errorname.SetActive(true);
+            texterror.text = "Name cannot contain special characters!";
+            return; // Exit the method without saving
+        }
+
+        if (inputText == "")
+        {
+            gameObjectToDeactivate.SetActive(false);
+            Debug.LogWarning("Name cannot be blank!");
+            errorname.SetActive(true);
+            texterror.text = "Name cannot be blank!";
             return; // Exit the method without saving
         }
 
         // Check if the name is longer than 5 characters
         if (inputText.Length > 5)
         {
+            gameObjectToDeactivate.SetActive(false);
             Debug.LogWarning("Name cannot be longer than 5 characters!");
             errorname.SetActive(true);
+            texterror.text = "Name cannot be longer than 5 characters!";
+
             return; // Exit the method without saving
         }
-
         // Update the input field with the modified text
         input.text = inputText;
+        // Guardar el nombre en la base de datos
+        databaseaccess = databaseaccess ?? new DatabaseAccess();
+        bool saveSuccessful = databaseaccess.SaveName(inputText.ToLower());
+        Debug.Log(saveSuccessful.ToString());
+        // Desactivar el GameObject si la operación de guardar falla
+        if (!saveSuccessful)
+        {
+            // Desactivar el GameObject que se desea desactivar
+            gameObjectToDeactivate.SetActive(false);
+            errorname.SetActive(true);
+            texterror.text = "There is already someone with that name";
+            return;
+        }
+
 
         // Update the text on the canvas
         textoCanvas.text = inputText;
@@ -60,35 +88,35 @@ public class SelectName : MonoBehaviour
         {
             if (HasSpecialCharacters(inputText))
             {
+                gameObjectToDeactivate.SetActive(false);
                 Debug.LogWarning("Name cannot contain special characters!");
                 errorname.SetActive(true);
-
+                texterror.text = "Name cannot contain special characters!";
                 return; // Exit the method without saving
             }
 
             // Check if the name is longer than 5 characters
             if (inputText.Length > 5)
             {
+                gameObjectToDeactivate.SetActive(false);
                 Debug.LogWarning("Name cannot be longer than 5 characters!");
+                texterror.text = "Name cannot be longer than 5 characters!";
                 errorname.SetActive(true);
                 return; // Exit the method without saving
             }
-
+            gameObjectToDeactivate.SetActive(false);
             // Handle the case where the name already exists
             Debug.LogWarning("Name already exists!");
+            texterror.text = "Name already exists!";
             errorname.SetActive(true);
             return; // Exit the method without saving
         }
 
+        gameObjectToDeactivate.SetActive(true);
         // Create a new PlayerData object with the modified text
         dataplayer = new PlayerData(inputText);
-
         // Save in GameData
         GameData.playerData = dataplayer;
-
-        // Save the name in the database
-        databaseaccess = databaseaccess ?? new DatabaseAccess();
-        databaseaccess.SaveName(inputText);
 
         // Update the last entered name in PlayerData
         PlayerData.lastEnteredName = inputText;

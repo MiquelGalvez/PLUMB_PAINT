@@ -811,12 +811,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scorePopUp: {fileID: 1731927218}
-  maxHealth: 20
+  maxHealth: 75
   animator: {fileID: 722348049}
   deadAudioSource: {fileID: 1953782448}
   pasarescena: {fileID: 48688851}
   opendoor: {fileID: 296164661}
-  currentHealth: 20
+  currentHealth: 75
 --- !u!95 &722348049 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9166055535436056293, guid: 22adcc3dc24435248a64007aaafff9a9, type: 3}

@@ -200,51 +200,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122927447}
   m_CullTransparentMesh: 1
---- !u!1 &184390319
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 184390321}
-  - component: {fileID: 184390320}
-  m_Layer: 0
-  m_Name: MenuPause
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &184390320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 184390319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f15ef95aab2f53418f00c02278b1737, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvassettings: {fileID: 0}
---- !u!4 &184390321
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 184390319}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.4060745, y: 2.730479, z: 47.96885}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &200983358
 GameObject:
   m_ObjectHideFlags: 0
@@ -2366,7 +2321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: 43}
+  m_AnchoredPosition: {x: 6, y: 152}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1224284216
@@ -3158,9 +3113,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1129680155}
     - target: {fileID: 2584204497355711531, guid: 9de5989746717ad4f8df1158575c2572, type: 3}
+      propertyPath: texterror
+      value: 
+      objectReference: {fileID: 1468976602}
+    - target: {fileID: 2584204497355711531, guid: 9de5989746717ad4f8df1158575c2572, type: 3}
       propertyPath: inputField
       value: 
       objectReference: {fileID: 1552210005}
+    - target: {fileID: 2584204497355711531, guid: 9de5989746717ad4f8df1158575c2572, type: 3}
+      propertyPath: gameObjectToDeactivate
+      value: 
+      objectReference: {fileID: 1513775030}
     - target: {fileID: 2639662170198085770, guid: 9de5989746717ad4f8df1158575c2572, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4235,4 +4198,3 @@ SceneRoots:
   - {fileID: 441477379}
   - {fileID: 1324929960}
   - {fileID: 1244488127}
-  - {fileID: 184390321}

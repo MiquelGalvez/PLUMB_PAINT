@@ -13,8 +13,14 @@ public class DatabaseAccess
 
 
     // Saves a player's name and initial score to the database
-    public void SaveName(string name)
+    public bool SaveName(string name)
     {
+        if (GetName(name))
+        {
+            Debug.Log("El nombre ya existe");
+            return false;
+        }
+
         double score = 0;
         database = client.GetDatabase("UnityDB");
         collection = database.GetCollection<BsonDocument>("Players");
@@ -22,8 +28,9 @@ public class DatabaseAccess
         // Creates a document with player's name and initial score
         var document = new BsonDocument { { "player", name }, { "score", score } };
         collection.InsertOne(document);
-    }
 
+        return true; // Retorna true si la operación fue exitosa
+    }
     // Updates a player's score in the database
     public void UpdateScore(string playerName, double scoreToAdd)
     {
@@ -34,8 +41,10 @@ public class DatabaseAccess
             collection = database.GetCollection<BsonDocument>("Players");
         }
 
+        ObjectId Id = GetId(playerName);
+
         // Retrieves the player's document from the database
-        var filter = Builders<BsonDocument>.Filter.Eq("player", playerName);
+        var filter = Builders<BsonDocument>.Filter.Eq("_id", Id);
         var playerDocument = collection.Find(filter).FirstOrDefault();
 
         if (playerDocument != null)
@@ -80,6 +89,51 @@ public class DatabaseAccess
         {
             Debug.LogError("Player not found in the database: " + playerName);
             return null; // Indicates player not found
+        }
+    }
+
+    public bool GetName(string playerName)
+    {
+        if (collection == null)
+        {
+            // Initializes the collection if not already initialized
+            database = client.GetDatabase("UnityDB");
+            collection = database.GetCollection<BsonDocument>("Players");
+        }
+
+        // Filters the player's document by name
+        var filter = Builders<BsonDocument>.Filter.Eq("player", playerName);
+        var playerDocument = collection.Find(filter).FirstOrDefault();
+
+        if (playerDocument != null)
+        {
+            // Retrieves the player's score
+            string name = playerDocument["player"].AsString;
+            return true;
+        }
+        else
+        {
+            Debug.LogError("Player not found in the database: " + playerName);
+            return false; // Indicates player not found
+        }
+    }
+
+    // GetId method
+    public ObjectId GetId(string playerName)
+    {
+        var filter = Builders<BsonDocument>.Filter.Eq("player", playerName);
+        var playerDocument = collection.Find(filter).FirstOrDefault();
+
+        if (playerDocument != null)
+        {
+            // Retrieves the player's _id field
+            ObjectId id = playerDocument["_id"].AsObjectId; // Use AsObjectId for ObjectId fields
+            return id; // Convert ObjectId to string
+        }
+        else
+        {
+            Debug.LogError("Player not found in the database: " + playerName);
+            return ObjectId.Empty; // Indicates player not found
         }
     }
 
